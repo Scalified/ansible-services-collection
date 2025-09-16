@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "**"
+    tags-ignore:
+      - "**"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+        with:
+          requirements_file: requirements.yml
+
+  sanity:
+    name: Sanity (${{ matrix.ansible }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ansible:
+          - stable-2.16
+    steps:
+      - name: Sanity
+        uses: ansible-community/ansible-test-gh-action@release/v1
+        with:
+          ansible-core-version: ${{ matrix.ansible }}
+          testing-type: sanity
+          pull-request-change-detection: false
+          coverage: never
+
+  molecule:
+    name: Molecule
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: "${{ github.repository }}"
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, sanity, molecule]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build collection
+        uses: ansible-community/github-action-build-collection@main

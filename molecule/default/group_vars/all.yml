@@ -1,0 +1,14 @@
+# Global
+domain: "example.com"
+
+# Bootstrap
+services_dir: /opt
+services_owner: "{{ ansible_user_id }}"
+services_group: root
+services_dir_mode: "0770"
+services_file_mode: "0660"
+
+# Certbot
+certbot_cf_email: "test@example.com"
+certbot_cf_api_token: "1234567890abcdef1234567890abcdef1234"
+certbot_dir: "{{ services_dir }}/certbot"

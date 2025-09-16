@@ -1,0 +1,11 @@
+---
+- name: Bootstrap Role - Services Initialization
+  ansible.builtin.debug:
+    msg:
+      - "======================================="
+      - "  Bootstrap: Services Initialization"
+      - "======================================="
+      - "  Base directory: {{ services_dir }}"
+      - "  Owner: {{ services_owner }}"
+      - "  Group: {{ services_group }}"
+      - "======================================="

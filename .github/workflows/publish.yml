@@ -1,0 +1,22 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  publish:
+    name: Publish to Ansible Galaxy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build collection
+        id: build-collection
+        uses: ansible-community/github-action-build-collection@main
+
+      - name: Publish collection to Ansible Galaxy
+        run: >-
+          ansible-galaxy collection publish 
+          ${{ steps.build-collection.outputs.artifact-filename }} 
+          --api-key ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
