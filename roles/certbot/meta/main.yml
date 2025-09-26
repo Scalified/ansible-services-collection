@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: Vladyslav Baidak <vld.x@hotmail.com>
+  description: Certbot SSL certificate management with Cloudflare DNS challenge
+  company: Scalified
+  license: MIT
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - certbot
+    - ssl
+    - certificates
+    - letsencrypt
+    - cloudflare
+    - dns
+
+dependencies:
+  - role: scalified.services.bootstrap

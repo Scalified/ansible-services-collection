@@ -1,0 +1,14 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: dind
+    image: docker:dind
+    privileged: true
+    command: ["dockerd", "--host=unix:///var/run/docker.sock"]
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

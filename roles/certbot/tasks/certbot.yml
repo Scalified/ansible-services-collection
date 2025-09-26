@@ -1,0 +1,14 @@
+---
+- name: Copy Certbot templates
+  scalified.services.template:
+    src: "{{ role_path }}/templates"
+    dest: "{{ certbot_dir }}/"
+    directory_mode: "{{ certbot_dir_mode }}"
+    mode: "{{ certbot_file_mode }}"
+    owner: "{{ certbot_owner }}"
+    group: "{{ certbot_group }}"
+
+- name: Start Certbot
+  community.docker.docker_compose_v2:
+    project_src: "{{ certbot_dir }}"
+    state: present

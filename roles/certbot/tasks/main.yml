@@ -1,0 +1,10 @@
+---
+- name: Docker Role - setup and configuration
+  ansible.builtin.debug:
+    msg:
+      - "======================================="
+      - "  Certbot: SSL certificate management"
+      - "======================================="
+
+- name: Include Certbot tasks
+  ansible.builtin.include_tasks: certbot.yml

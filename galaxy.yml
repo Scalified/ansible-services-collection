@@ -1,0 +1,33 @@
+---
+namespace: scalified
+name: services
+version: 1.0.0
+readme: README.md
+authors:
+  - Vladyslav Baidak <vld.x@hotmail.com>
+
+description: Ansible collection providing streamlined services setup
+
+license_file: LICENSE
+
+tags:
+  - infrastructure
+  - monitoring
+  - certbot
+  - nginx
+
+repository: https://github.com/scalified/ansible-services-collection
+documentation: https://github.com/scalified/ansible-services-collection
+homepage: https://github.com/scalified/ansible-services-collection
+issues: https://github.com/scalified/ansible-services-collection/issues
+
+build_ignore:
+  - "*.gz"
+  - .claude
+  - .gitignore
+  - .github
+  - .ansible-lint.yml
+  - .ansible
+  - CLAUDE.md
+  - molecule
+  - tests

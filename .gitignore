@@ -1,0 +1,6 @@
+*.gz
+*.pyc
+
+.ansible/
+
+tests/output/

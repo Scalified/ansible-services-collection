@@ -1,0 +1,9 @@
+---
+# Base directory for services installation
+services_dir: /opt  # noqa: var-naming
+
+# Service owner and group
+services_owner: "{{ ansible_user_id }}"  # noqa: var-naming
+services_group: root  # noqa: var-naming
+services_dir_mode: "0770"  # noqa: var-naming
+services_file_mode: "0660"  # noqa: var-naming
