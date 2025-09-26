@@ -1,3 +1,4 @@
+---
 namespace: scalified
 name: services
 version: 1.0.0
@@ -30,9 +31,3 @@ build_ignore:
   - CLAUDE.md
   - molecule
   - tests
-
-# dependencies:
-  # ansible.posix: "*"
-  # community.general: "*"
-  # community.crypto: "*"
-  # community.docker: "*"

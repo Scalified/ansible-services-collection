@@ -35,7 +35,9 @@
         that:
           - file.pw_name == services_owner
           - file.gr_name == services_group
-        fail_msg: "File {{ file.path }} has incorrect ownership: {{ file.pw_name }}:{{ file.gr_name }}"
+        fail_msg: >-
+          File {{ file.path }} has incorrect ownership:
+          {{ file.pw_name }}:{{ file.gr_name }}
         success_msg: "File {{ file.path }} has correct ownership"
       loop: >-
         {{ files_stat.results

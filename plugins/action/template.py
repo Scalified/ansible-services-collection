@@ -4,6 +4,7 @@ from ansible.utils.display import Display
 
 display = Display()
 
+
 class ActionModule(ActionBase):
 
     def run(self, tmp=None, task_vars=None):
@@ -28,7 +29,7 @@ class ActionModule(ActionBase):
 
         display.vv(f"Starting directory walk from: {self._loader.path_dwim(src_root)}")
 
-        for root, _, files in os.walk(self._loader.path_dwim(src_root)):
+        for root, _, files in os.walk(self._loader.path_dwim(src_root)):  # pylint: disable=disallowed-name
             rel_root = os.path.relpath(root, self._loader.path_dwim(src_root))
             remote_dir = os.path.join(dest_root, rel_root) if rel_root != "." else dest_root
 

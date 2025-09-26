@@ -32,7 +32,7 @@ options:
     description:
       - Mode to set for directories created during templating.
       - If not specified, directories will be created with default permissions.
-      - Refer to the ansible.builtin.file module for more information about mode.
+      - Refer to the ansible.builtin.template action plugin for more information about mode.
     required: false
     type: raw
   owner:
@@ -49,7 +49,6 @@ options:
     type: str
 seealso:
   - module: ansible.builtin.template
-  - module: ansible.builtin.file
 author:
   - Vladyslav Baidak (@scalified)
 '''
