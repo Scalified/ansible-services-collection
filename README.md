@@ -13,6 +13,8 @@ Ansible collection providing streamlined services setup
 - **Python:** >= 3.6
 - **Docker** >= 3.4
 
+> Package cache must be updated before running any services role
+
 ## Installation
 
 ### Ansible Galaxy
@@ -43,6 +45,7 @@ ansible-galaxy collection install -r requirements.yml
 
 ## Roles
 
+* [Certbot](roles/certbot/README.md)
 * [Nginx](roles/nginx/README.md)
 
 ---

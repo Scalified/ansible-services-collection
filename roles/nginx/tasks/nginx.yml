@@ -1,0 +1,65 @@
+---
+- name: Install Nginx packages
+  ansible.builtin.package:
+    name: python3-passlib
+    state: present
+  retries: 3
+  delay: 10
+  become: true
+
+- name: Copy Nginx templates
+  scalified.services.template:
+    src: "{{ role_path }}/templates"
+    dest: "{{ nginx_dir }}/"
+    directory_mode: "{{ nginx_dir_mode }}"
+    mode: "{{ nginx_file_mode }}"
+    owner: "{{ nginx_owner }}"
+    group: "{{ nginx_group }}"
+
+- name: Copy Nginx files
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ nginx_dir }}/nginx"
+    directory_mode: "{{ nginx_dir_mode }}"
+    mode: "{{ nginx_file_mode }}"
+    owner: "{{ nginx_owner }}"
+    group: "{{ nginx_group }}"
+
+- name: Copy Nginx role configuration templates
+  scalified.services.template:
+    src: "{{ role_path | dirname }}/{{ nginx_conf_role }}/templates/nginx"
+    dest: "{{ nginx_conf_dir }}/"
+    directory_mode: "{{ nginx_dir_mode }}"
+    mode: "{{ nginx_file_mode }}"
+    owner: "{{ nginx_owner }}"
+    group: "{{ nginx_group }}"
+  loop: "{{ nginx_conf_roles }}"
+  loop_control:
+    loop_var: nginx_conf_role
+  when: nginx_conf_roles
+
+- name: Copy Nginx file configuration templates
+  ansible.builtin.template:
+    src: "{{ nginx_conf_file }}"
+    dest: "{{ nginx_conf_dir }}/"
+    mode: "{{ nginx_file_mode }}"
+    owner: "{{ nginx_owner }}"
+    group: "{{ nginx_group }}"
+  loop: "{{ nginx_conf_files }}"
+  loop_control:
+    loop_var: nginx_conf_file
+  when: nginx_conf_files
+
+- name: Create nginx credentials file
+  community.general.htpasswd:
+    path: "{{ nginx_dir }}/nginx/.htpasswd"
+    name: "{{ nginx_user }}"
+    password: "{{ nginx_password }}"
+    owner: "{{ nginx_owner }}"
+    group: "{{ nginx_group }}"
+    mode: "0644"
+
+- name: Start Nginx
+  community.docker.docker_compose_v2:
+    project_src: "{{ nginx_dir }}"
+    state: present

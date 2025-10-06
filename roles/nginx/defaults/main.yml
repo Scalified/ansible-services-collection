@@ -1,0 +1,27 @@
+---
+nginx_dir: "{{ services_dir }}/nginx"
+nginx_conf_dir: "{{ nginx_dir }}/nginx/conf.d"
+nginx_owner: "{{ services_owner }}"
+nginx_group: "{{ services_group }}"
+nginx_dir_mode: "{{ services_dir_mode }}"
+nginx_file_mode: "{{ services_file_mode }}"
+
+nginx_version: alpine
+nginx_container_name: nginx
+nginx_watchtower_enabled: false
+nginx_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 500M
+nginx_ssl_certs_server_path: "{{ services_ssl_certs_server_path }}"
+nginx_ssl_keys_server_path: "{{ services_ssl_keys_server_path }}"
+nginx_volumes: []
+nginx_networks: []
+nginx_bind_host: "{{ services_bind_host }}"
+nginx_ports:
+  - "80:80/tcp"
+  - "443:443/tcp"
+
+nginx_conf_roles: []
+nginx_conf_files: []
+nginx_user: admin
+nginx_password: admin

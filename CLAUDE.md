@@ -42,3 +42,5 @@ This is an **Ansible Collection** for streamlined services, published as: `scali
 * Run integration tests with: molecule test.
 * Every file with logic must have a corresponding test file in: `molecule/default/roles/<role>/tasks/`
 * Role-level verifications are placed in: `molecule/default/verify.yml`
+* Use the following test files as templates:
+    * `molecule/default/certbot/tasks/certbot.yml` — verify files and directories attributes and content.

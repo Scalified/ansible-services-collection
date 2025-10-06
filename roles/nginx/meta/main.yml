@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Vladyslav Baidak <vld.x@hotmail.com>
+  description: Nginx service role
+  company: Scalified
+  license: MIT
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - nginx
+    - webserver
+    - proxy
+
+dependencies:
+  - role: scalified.services.bootstrap

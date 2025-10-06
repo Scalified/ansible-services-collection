@@ -2,21 +2,29 @@ services:
   certbot:
     container_name: {{ certbot_container_name }}
     image: scalified/certbot-cloudflare:{{ certbot_version }}
+{% if certbot_watchtower_enabled %}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
     environment:
       CF_EMAIL: "{{ certbot_cf_email }}"
       DOMAINS: "{{ certbot_domains | join(' ') }}"
 {% if certbot_deploy_hook is defined %}
       DEPLOY_HOOK: "{{ certbot_deploy_hook }}"
 {% endif %}
+{% if certbot_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in certbot_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
     volumes:
-      - ./cloudflare.ini:/etc/certbot/cloudflare.ini:ro
+      - ./certbot/cloudflare.ini:/etc/certbot/cloudflare.ini:ro
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: "bridge"
-{% if certbot_watchtower_enabled %}
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-{% endif %}
     healthcheck:
       test: ["CMD", "test", "-d", "/etc/letsencrypt/live/{{ certbot_domain }}"]
       interval: 30s

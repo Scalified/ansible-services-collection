@@ -1,0 +1,117 @@
+---
+- name: Verify Nginx files attributes
+  block:
+    - name: Get the list of Nginx files
+      ansible.builtin.find:
+        paths: "{{ nginx_dir }}"
+        recurse: true
+        file_type: file
+      register: nginx_files
+
+    - name: Stat Nginx files
+      ansible.builtin.stat:
+        path: "{{ file }}"
+      register: nginx_files_stat
+      loop: "{{ nginx_files.files | map(attribute='path') }}"
+      loop_control:
+        loop_var: file
+
+    - name: Assert Nginx files mode
+      ansible.builtin.assert:
+        that: file.mode | string == services_file_mode
+        fail_msg: "File {{ file.path }} has incorrect mode: {{ file.mode }}"
+        success_msg: "File {{ file }} has correct mode"
+      loop: >-
+        {{ nginx_files_stat.results
+          | map(attribute='stat')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['path', 'mode'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+    - name: Assert Nginx files ownership
+      ansible.builtin.assert:
+        that:
+          - file.pw_name == services_owner
+          - file.gr_name == services_group
+        fail_msg: >-
+          File {{ file.path }} has incorrect ownership:
+          {{ file.pw_name }}:{{ file.gr_name }}
+        success_msg: "File {{ file.path }} has correct ownership"
+      loop: >-
+        {{ nginx_files_stat.results
+          | map(attribute='stat')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['path', 'pw_name', 'gr_name'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+- name: Verify Nginx files content
+  block:
+    - name: Slurp Nginx files content
+      ansible.builtin.slurp:
+        src: "{{ file }}"
+      register: nginx_files_slurp
+      loop: >-
+        {{ nginx_files.files
+          | map(attribute='path')
+          | reject('search', 'betterlisting/icons') }}
+      loop_control:
+        loop_var: file
+
+    - name: Assert Nginx files have Unix line endings
+      ansible.builtin.assert:
+        that: "'\\r\\n' not in (file.content | b64decode)"
+        fail_msg: "File {{ file.file }} contains Windows line endings (CRLF)"
+        success_msg: "File {{ file.file }} has Unix line endings (LF)"
+      loop: >-
+        {{ nginx_files_slurp.results
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['file', 'content'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+- name: Verify Nginx authentication
+  block:
+    - name: Check successful authentication with provided credentials
+      ansible.builtin.uri:
+        url: "https://localhost"
+        method: GET
+        headers:
+          Host: "htpasswd.example.com"
+        url_username: "{{ nginx_user }}"
+        url_password: "{{ nginx_password }}"
+        return_content: true
+        validate_certs: false
+        status_code: 200
+      register: nginx_auth_result
+
+    - name: Assert successful authentication
+      ansible.builtin.assert:
+        that:
+          - nginx_auth_result.status == 200
+          - "'Access Granted' in nginx_auth_result.content"
+        fail_msg: "Nginx authentication failed"
+        success_msg: "Nginx authentication successful"
+
+    - name: Check authentication required
+      ansible.builtin.uri:
+        url: "https://localhost"
+        method: GET
+        headers:
+          Host: "htpasswd.example.com"
+        return_content: true
+        validate_certs: false
+        status_code: 401
+      register: nginx_auth_required_result
+
+    - name: Assert authentication required
+      ansible.builtin.assert:
+        that:
+          - nginx_auth_required_result.status == 401
+          - "'Authorization Required' in nginx_auth_required_result.content"
+        fail_msg: "Authentication required failed"
+        success_msg: "Authentication required succeeded"

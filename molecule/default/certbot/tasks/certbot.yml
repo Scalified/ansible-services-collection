@@ -1,18 +1,18 @@
 ---
-- name: Verify certbot files attributes
+- name: Verify Certbot files attributes
   block:
     - name: Get the list of files
       ansible.builtin.find:
         paths: "{{ certbot_dir }}"
         recurse: true
         file_type: file
-      register: files
+      register: certbot_files
 
     - name: Stat files
       ansible.builtin.stat:
         path: "{{ file }}"
-      register: files_stat
-      loop: "{{ files.files | map(attribute='path') }}"
+      register: certbot_files_stat
+      loop: "{{ certbot_files.files | map(attribute='path') }}"
       loop_control:
         loop_var: file
 
@@ -22,7 +22,7 @@
         fail_msg: "File {{ file.path }} has incorrect mode: {{ file.mode }}"
         success_msg: "File {{ file }} has correct mode"
       loop: >-
-        {{ files_stat.results
+        {{ certbot_files_stat.results
           | map(attribute='stat')
           | map('dict2items')
           | map('selectattr', 'key', 'in', ['path', 'mode'])
@@ -40,7 +40,7 @@
           {{ file.pw_name }}:{{ file.gr_name }}
         success_msg: "File {{ file.path }} has correct ownership"
       loop: >-
-        {{ files_stat.results
+        {{ certbot_files_stat.results
           | map(attribute='stat')
           | map('dict2items')
           | map('selectattr', 'key', 'in', ['path', 'pw_name', 'gr_name'])
@@ -48,11 +48,13 @@
       loop_control:
         loop_var: file
 
+- name: Verify Certbot files content
+  block:
     - name: Slurp files content
       ansible.builtin.slurp:
         src: "{{ file }}"
-      register: files_slurp
-      loop: "{{ files.files | map(attribute='path') }}"
+      register: certbot_files_slurp
+      loop: "{{ certbot_files.files | map(attribute='path') }}"
       loop_control:
         loop_var: file
 
@@ -62,7 +64,7 @@
         fail_msg: "File {{ file.file }} contains Windows line endings (CRLF)"
         success_msg: "File {{ file.file }} has Unix line endings (LF)"
       loop: >-
-        {{ files_slurp.results
+        {{ certbot_files_slurp.results
           | map('dict2items')
           | map('selectattr', 'key', 'in', ['file', 'content'])
           | map('items2dict') }}
