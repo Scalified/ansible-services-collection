@@ -1,5 +1,5 @@
 ---
-- name: Docker Role - setup and configuration
+- name: Certbot Role - SSL certificate management
   ansible.builtin.debug:
     msg:
       - "======================================="

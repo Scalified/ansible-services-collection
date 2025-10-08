@@ -4,3 +4,4 @@
   roles:
     - scalified.services.certbot
     - scalified.services.nginx
+    - scalified.services.watchtower

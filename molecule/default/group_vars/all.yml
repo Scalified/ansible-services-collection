@@ -2,6 +2,9 @@
 # Global
 domain: "example.com"
 
+# System
+system_update_only: true
+
 # Bootstrap
 services_dir: /opt
 services_owner: "{{ ansible_user_id }}"
@@ -23,3 +26,6 @@ nginx_conf_files:
   - "{{ molecule_scenario_directory }}/nginx/templates/htpasswd.conf"
 nginx_user: testadmin
 nginx_password: testadminpassword
+
+# Watchtower
+watchtower_dir: "{{ services_dir }}/watchtower"

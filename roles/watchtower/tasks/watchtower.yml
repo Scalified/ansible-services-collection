@@ -1,0 +1,14 @@
+---
+- name: Copy Watchtower templates
+  scalified.services.template:
+    src: "{{ role_path }}/templates"
+    dest: "{{ watchtower_dir }}/"
+    directory_mode: "{{ watchtower_dir_mode }}"
+    mode: "{{ watchtower_file_mode }}"
+    owner: "{{ watchtower_owner }}"
+    group: "{{ watchtower_group }}"
+
+- name: Start Watchtower
+  community.docker.docker_compose_v2:
+    project_src: "{{ watchtower_dir }}"
+    state: present

@@ -11,7 +11,7 @@ nginx_container_name: nginx
 nginx_watchtower_enabled: false
 nginx_deploy_resources_limits:
   cpus: "0.50"
-  memory: 500M
+  memory: 1G
 nginx_ssl_certs_server_path: "{{ services_ssl_certs_server_path }}"
 nginx_ssl_keys_server_path: "{{ services_ssl_keys_server_path }}"
 nginx_volumes: []

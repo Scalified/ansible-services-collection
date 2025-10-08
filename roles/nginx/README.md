@@ -1,6 +1,6 @@
 # Nginx
 
-Deploys **Nginx** service as a Docker container with comprehensive configuration options
+Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, load balancer, TCP/UDP proxy server, and mail proxy server
 
 ## Usage
 

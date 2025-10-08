@@ -1,0 +1,3 @@
+---
+- name: Include Watchtower verification tasks
+  ansible.builtin.include_tasks: watchtower.yml
