@@ -5,9 +5,9 @@ driver:
   name: docker
 platforms:
   - name: dind
-    image: docker:dind
+    image: scalified/dind
     privileged: true
-    command: ["dockerd", "--host=unix:///var/run/docker.sock"]
+    cgroupns_mode: host
 provisioner:
   name: ansible
 verifier:

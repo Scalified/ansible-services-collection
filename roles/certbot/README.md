@@ -14,21 +14,22 @@ Manages SSL certificates using Certbot with Cloudflare DNS challenge
 
 ## Variables
 
-| Variable                     | Description                                       | Default Value                |
-|------------------------------|---------------------------------------------------|------------------------------|
-| `certbot_version`            | Certbot Docker image version                      | `latest`                     |
-| `certbot_container_name`     | Docker container name for Certbot                 | `certbot`                    |
-| `certbot_watchtower_enabled` | Enable Watchtower for automatic updates           | `true`                       |
-| `certbot_domain`             | Primary domain for SSL certificate                | `{{ domain }}`               |
-| `certbot_domains`            | List of domains to include in certificate         | `[domain, *.domain]`         |
-| `certbot_dir`                | Directory for Certbot configuration               | `{{ services_dir }}/certbot` |
-| `certbot_owner`              | Owner for Certbot files and directories           | `{{ services_owner }}`       |
-| `certbot_group`              | Group for Certbot files and directories           | `{{ services_group }}`       |
-| `certbot_dir_mode`           | Permissions for Certbot directories               | `{{ services_dir_mode }}`    |
-| `certbot_file_mode`          | Permissions for Certbot files                     | `{{ services_file_mode }}`   |
-| `certbot_cf_email`           | Cloudflare account email (required)               | *undefined*                  |
-| `certbot_cf_api_token`       | Cloudflare API token for DNS challenge (required) | *undefined*                  |
-| `certbot_deploy_hook`        | Deploy hook command to run after SSL update       | *undefined*                  |
+| Variable                          | Description                                       | Default Value                                    |
+|-----------------------------------|---------------------------------------------------|--------------------------------------------------|
+| `certbot_dir`                     | Directory for Certbot configuration               | `{{ services_dir }}/certbot`                     |
+| `certbot_owner`                   | Owner for Certbot files and directories           | `{{ services_owner }}`                           |
+| `certbot_group`                   | Group for Certbot files and directories           | `{{ services_group }}`                           |
+| `certbot_dir_mode`                | Permissions for Certbot directories               | `{{ services_dir_mode }}`                        |
+| `certbot_file_mode`               | Permissions for Certbot files                     | `{{ services_file_mode }}`                       |
+| `certbot_version`                 | Certbot Docker image version                      | `latest`                                         |
+| `certbot_container_name`          | Docker container name for Certbot                 | `certbot`                                        |
+| `certbot_watchtower_enabled`      | Enable Watchtower for automatic updates           | `{{ services_watchtower_enabled }}`              |
+| `certbot_domain`                  | Primary domain for SSL certificate                | `{{ services_ssl_domain }}`                      |
+| `certbot_domains`                 | List of domains to include in certificate         | `[{{ certbot_domain }}, *.{{ certbot_domain }}]` |
+| `certbot_cf_email`                | Cloudflare account email (required)               | *undefined*                                      |
+| `certbot_cf_api_token`            | Cloudflare API token for DNS challenge (required) | *undefined*                                      |
+| `certbot_deploy_hook`             | Deploy hook command to run after SSL update       | *undefined*                                      |
+| `certbot_deploy_resources_limits` | Docker resource limits for Certbot container      | `{cpus: "0.50", memory: 500M}`                   |
 
 ## Required Variables
 

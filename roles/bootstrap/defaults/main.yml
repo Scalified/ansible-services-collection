@@ -7,3 +7,17 @@ services_owner: "{{ ansible_user_id }}"  # noqa: var-naming
 services_group: root  # noqa: var-naming
 services_dir_mode: "0770"  # noqa: var-naming
 services_file_mode: "0660"  # noqa: var-naming
+
+# Watchtower
+services_watchtower_enabled: true  # noqa: var-naming
+
+# SSL
+services_ssl_domain: "{{ domain }}"  # noqa: var-naming
+services_ssl_dir: "/etc/letsencrypt/live/{{ services_ssl_domain }}"  # noqa: var-naming
+services_ssl_certs_server_name: fullchain.pem  # noqa: var-naming
+services_ssl_keys_server_name: privkey.pem  # noqa: var-naming
+services_ssl_certs_server_path: "{{ services_ssl_dir }}/{{ services_ssl_certs_server_name }}"  # noqa: var-naming
+services_ssl_keys_server_path: "{{ services_ssl_dir }}/{{ services_ssl_keys_server_name }}"  # noqa: var-naming
+
+# Network
+services_bind_host: ""  # noqa: var-naming

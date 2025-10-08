@@ -3,3 +3,4 @@
   hosts: all
   roles:
     - scalified.services.certbot
+    - scalified.services.nginx

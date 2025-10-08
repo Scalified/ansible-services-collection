@@ -1,15 +1,18 @@
 ---
-certbot_version: "latest"
-certbot_container_name: "certbot"
-certbot_watchtower_enabled: true
-
-certbot_domain: "{{ domain }}"
-certbot_domains:
-  - "{{ certbot_domain }}"
-  - "*.{{ certbot_domain }}"
-
 certbot_dir: "{{ services_dir }}/certbot"
 certbot_owner: "{{ services_owner }}"
 certbot_group: "{{ services_group }}"
 certbot_dir_mode: "{{ services_dir_mode }}"
 certbot_file_mode: "{{ services_file_mode }}"
+
+certbot_version: latest
+certbot_container_name: certbot
+certbot_watchtower_enabled: "{{ services_watchtower_enabled }}"
+certbot_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 500M
+
+certbot_domain: "{{ services_ssl_domain }}"
+certbot_domains:
+  - "{{ certbot_domain }}"
+  - "*.{{ certbot_domain }}"
