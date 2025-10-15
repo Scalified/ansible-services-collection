@@ -22,6 +22,7 @@ Performs services initialization
 | `services_dir_mode`              | Permissions for services directories              | `"0770"`                                                      |
 | `services_file_mode`             | Permissions for services files                    | `"0660"`                                                      |
 | `services_watchtower_enabled`    | Enable Watchtower for automatic container updates | `true`                                                        |
+| `services_timezone`              | Timezone for services                             | `{{ system_timezone \| default('UTC') }}`                     |
 | `services_ssl_domain`            | SSL domain name                                   | `{{ domain }}`                                                |
 | `services_ssl_dir`               | SSL certificates directory                        | `/etc/letsencrypt/live/{{ services_ssl_domain }}`             |
 | `services_ssl_certs_server_name` | SSL certificate filename                          | `fullchain.pem`                                               |

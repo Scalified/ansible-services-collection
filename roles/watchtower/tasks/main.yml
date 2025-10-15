@@ -1,0 +1,10 @@
+---
+- name: Watchtower Role - Watchtower service deployment
+  ansible.builtin.debug:
+    msg:
+      - "=================================="
+      - "  Watchtower: service deployment"
+      - "=================================="
+
+- name: Include Watchtower tasks
+  ansible.builtin.include_tasks: watchtower.yml

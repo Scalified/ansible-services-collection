@@ -45,8 +45,10 @@ ansible-galaxy collection install -r requirements.yml
 
 ## Roles
 
+* [Bootstrap](roles/bootstrap/README.md)
 * [Certbot](roles/certbot/README.md)
 * [Nginx](roles/nginx/README.md)
+* [Watchtower](roles/watchtower/README.md)
 
 ---
 

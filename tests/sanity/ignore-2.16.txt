@@ -1,2 +1,3 @@
 roles/certbot/templates/compose.yml yamllint!skip
 roles/nginx/templates/compose.yml yamllint!skip
+roles/watchtower/templates/compose.yml yamllint!skip

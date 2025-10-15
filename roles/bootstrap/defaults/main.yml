@@ -8,7 +8,8 @@ services_group: root  # noqa: var-naming
 services_dir_mode: "0770"  # noqa: var-naming
 services_file_mode: "0660"  # noqa: var-naming
 
-# Watchtower
+# General settings
+services_timezone: "{{ system_timezone | default('UTC') }}"  # noqa: var-naming
 services_watchtower_enabled: true  # noqa: var-naming
 
 # SSL
