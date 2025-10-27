@@ -1,6 +1,6 @@
 ---
 # Base directory for services installation
-services_dir: /opt  # noqa: var-naming
+services_dir: /opt/services  # noqa: var-naming
 
 # Service owner and group
 services_owner: "{{ ansible_user_id }}"  # noqa: var-naming
@@ -10,6 +10,8 @@ services_file_mode: "0660"  # noqa: var-naming
 
 # General settings
 services_timezone: "{{ system_timezone | default('UTC') }}"  # noqa: var-naming
+services_bind_ip: ""  # noqa: var-naming
+services_email: "admin@{{ domain }}"  # noqa: var-naming
 services_watchtower_enabled: true  # noqa: var-naming
 
 # SSL
@@ -19,6 +21,3 @@ services_ssl_certs_server_name: fullchain.pem  # noqa: var-naming
 services_ssl_keys_server_name: privkey.pem  # noqa: var-naming
 services_ssl_certs_server_path: "{{ services_ssl_dir }}/{{ services_ssl_certs_server_name }}"  # noqa: var-naming
 services_ssl_keys_server_path: "{{ services_ssl_dir }}/{{ services_ssl_keys_server_name }}"  # noqa: var-naming
-
-# Network
-services_bind_host: ""  # noqa: var-naming

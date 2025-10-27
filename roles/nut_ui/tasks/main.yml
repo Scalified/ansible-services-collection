@@ -1,0 +1,10 @@
+---
+- name: NUT UI Role - NUT UI service deployment
+  ansible.builtin.debug:
+    msg:
+      - "=================================="
+      - "    NUT UI: service deployment"
+      - "=================================="
+
+- name: Include NUT UI tasks
+  ansible.builtin.include_tasks: nut_ui.yml

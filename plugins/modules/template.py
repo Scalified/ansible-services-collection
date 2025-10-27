@@ -20,6 +20,9 @@ options:
     description:
       - Path to the source directory containing template files.
       - This directory will be walked recursively.
+      - Can be an absolute path or relative path.
+      - Relative paths are resolved relative to the role's templates directory (if in a role)
+        or playbook templates directory, similar to ansible.builtin.template.
     required: true
     type: path
   dest:

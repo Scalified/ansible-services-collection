@@ -5,3 +5,4 @@
     - certbot
     - nginx
     - watchtower
+    - nut_ui

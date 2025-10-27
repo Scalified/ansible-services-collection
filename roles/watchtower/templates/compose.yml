@@ -1,7 +1,7 @@
 services:
   watchtower:
-    container_name: {{ watchtower_container_name }}
     image: containrrr/watchtower:{{ watchtower_version }}
+    container_name: {{ watchtower_container_name }}
     environment:
       TZ: "{{ watchtower_timezone }}"
       WATCHTOWER_CLEANUP: "{{ watchtower_cleanup }}"

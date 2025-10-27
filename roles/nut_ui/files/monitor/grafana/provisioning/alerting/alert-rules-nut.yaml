@@ -1,0 +1,338 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: nut
+    folder: nut
+    interval: 30s
+    rules:
+      - uid: eee3v7kq4nq4gd
+        title: UPS Status Change
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: changes(network_ups_tools_ups_status[5m])
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: C
+              type: threshold
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          description: UPS Status changed
+          summary: UPS Status Change
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: dee40ble79b7kf
+        title: High UPS Load
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: network_ups_tools_ups_load / 100
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.8
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: eedf38onmj4lca
+        panelId: 15
+        noDataState: NoData
+        execErrState: Error
+        for: 30s
+        annotations:
+          __dashboardUid__: eedf38onmj4lca
+          __panelId__: "15"
+          description: UPS load is at {{ humanizePercentage $values.A.Value }}
+          summary: High UPS load
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: fee45exwrpb7ke
+        title: High UPS Power
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: 1 - (network_ups_tools_ups_power_nominal - network_ups_tools_ups_power) / network_ups_tools_ups_power_nominal
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: eedf38onmj4lca
+        panelId: 47
+        noDataState: NoData
+        execErrState: Error
+        for: 30s
+        annotations:
+          __dashboardUid__: eedf38onmj4lca
+          __panelId__: "47"
+          description: UPS power is at {{ humanizePercentage $values.A.Value }}
+          summary: High UPS power
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: cee41xsosjrwge
+        title: Low UPS Battery Charge
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: (network_ups_tools_battery_charge - network_ups_tools_battery_charge_low) / 100
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.05
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: eedf38onmj4lca
+        panelId: 45
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          __dashboardUid__: eedf38onmj4lca
+          __panelId__: "45"
+          description: UPS battery charge is only {{ humanizePercentage $values.A.Value }} higher than battery charge low
+          summary: Low UPS Battery charge
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: bee42s6bw4xs0f
+        title: High UPS Input Voltage
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: network_ups_tools_input_voltage
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 264
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: eedf38onmj4lca
+        panelId: 36
+        noDataState: NoData
+        execErrState: Error
+        for: 30s
+        annotations:
+          __dashboardUid__: eedf38onmj4lca
+          __panelId__: "36"
+          description: "UPS input voltage is: {{ $values.A.Value }}V"
+          summary: High UPS Input Voltage
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: aee44wnte8rnkc
+        title: UPS Output Voltage Outside Range
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 30
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: network_ups_tools_output_voltage
+              instant: true
+              intervalMs: 15000
+              legendFormat: "{{ups}}"
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 180
+                      - 270
+                    type: outside_range
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: eedf38onmj4lca
+        panelId: 41
+        noDataState: NoData
+        execErrState: Error
+        for: 30s
+        annotations:
+          __dashboardUid__: eedf38onmj4lca
+          __panelId__: "41"
+          description: "UPS output voltage is: {{ $values.A.Value }}V"
+          summary: UPS Output Voltage Outside Range
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack

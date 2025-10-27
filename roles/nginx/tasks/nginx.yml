@@ -27,7 +27,7 @@
 
 - name: Copy Nginx role configuration templates
   scalified.services.template:
-    src: "{{ role_path | dirname }}/{{ nginx_conf_role }}/templates/nginx"
+    src: "{{ nginx_conf_role | scalified.services.select_path(role_path, playbook_dir) }}/templates/nginx"
     dest: "{{ nginx_conf_dir }}/"
     directory_mode: "{{ nginx_dir_mode }}"
     mode: "{{ nginx_file_mode }}"
@@ -36,7 +36,7 @@
   loop: "{{ nginx_conf_roles }}"
   loop_control:
     loop_var: nginx_conf_role
-  when: nginx_conf_roles
+  when: nginx_conf_roles | length > 0
 
 - name: Copy Nginx file configuration templates
   ansible.builtin.template:
@@ -48,7 +48,7 @@
   loop: "{{ nginx_conf_files }}"
   loop_control:
     loop_var: nginx_conf_file
-  when: nginx_conf_files
+  when: nginx_conf_files | length > 0
 
 - name: Create nginx credentials file
   community.general.htpasswd:

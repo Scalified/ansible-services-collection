@@ -22,6 +22,9 @@ class ActionModule(ActionBase):
         if not src_root or not dest_root:
             return {"failed": True, "msg": "'src' and 'dest' are required"}
 
+        if not os.path.isabs(src_root):
+            src_root = os.path.abspath(os.path.join(self._task._role._role_path, 'templates', src_root))
+
         if not os.path.isdir(self._loader.path_dwim(src_root)):
             return {"failed": True, "msg": f"src '{src_root}' must be a directory"}
 

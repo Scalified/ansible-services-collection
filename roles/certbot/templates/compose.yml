@@ -1,7 +1,7 @@
 services:
   certbot:
-    container_name: {{ certbot_container_name }}
     image: scalified/certbot-cloudflare:{{ certbot_version }}
+    container_name: {{ certbot_container_name }}
 {% if certbot_watchtower_enabled %}
     labels:
       - "com.centurylinklabs.watchtower.enable=true"

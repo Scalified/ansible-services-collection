@@ -12,6 +12,18 @@ Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, lo
     - scalified.services.nginx
 ```
 
+## Handlers
+
+**Reload:** after configuration changes
+
+```yaml
+- name: Copy configuration file
+  ansible.builtin.copy:
+    src: appserver.conf
+    dest: "{{ nginx_conf_dir }}"
+  notify: "nginx : reload"
+```
+
 ## Variables
 
 | Variable                        | Description                           | Default Value                          |
@@ -30,12 +42,33 @@ Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, lo
 | `nginx_ssl_certs_server_path`   | SSL certificate path                  | `{{ services_ssl_certs_server_path }}` |
 | `nginx_volumes`                 | Additional volume mounts              | `[]`                                   |
 | `nginx_networks`                | Custom Docker networks                | `[]`                                   |
-| `nginx_bind_host`               | Host binding address                  | `{{ services_bind_host }}`             |
+| `nginx_bind_ip`                 | Bind IP address for port mapping      | `{{ services_bind_ip }}`               |
 | `nginx_ports`                   | Port mappings                         | `["80:80/tcp", "443:443/tcp"]`         |
 | `nginx_conf_roles`              | List of roles to include configs from | `[]`                                   |
 | `nginx_conf_files`              | List of custom config template files  | `[]`                                   |
 | `nginx_user`                    | Basic auth username                   | `admin`                                |
 | `nginx_password`                | Basic auth password                   | `admin`                                |
+
+## Snippets
+
+Reusable configuration snippets can be included into the Nginx server or location blocks for common features
+
+### Basic Authentication
+
+The `auth_basic.conf` snippet enables HTTP Basic Authentication using the `/etc/nginx/conf.d/.htpasswd` file.
+
+To use the snippet, include it in a server block:
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+
+    include /etc/nginx/conf.d/auth_basic.conf;
+
+    # ...other configuration...
+}
+```
 
 ## Configuration Files from Roles
 
@@ -44,7 +77,7 @@ Use `nginx_conf_roles` variable to include Nginx configurations from other roles
 ```yaml
 nginx_conf_roles:
   - appserver
-  - monitoring
+  - scalified.services.monitor
 ```
 
 > Configuration files should be placed in `roles/<role_name>/templates/nginx/` directory
