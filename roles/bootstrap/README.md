@@ -16,7 +16,7 @@ Performs services initialization
 
 | Variable                         | Description                                       | Default Value                                                 |
 |----------------------------------|---------------------------------------------------|---------------------------------------------------------------|
-| `services_dir`                   | Base directory for services installation          | `/opt`                                                        |
+| `services_dir`                   | Base directory for services installation          | `/opt/services`                                               |
 | `services_owner`                 | Owner for services files and directories          | `{{ ansible_user_id }}`                                       |
 | `services_group`                 | Group for services files and directories          | `root`                                                        |
 | `services_dir_mode`              | Permissions for services directories              | `"0770"`                                                      |
@@ -29,4 +29,5 @@ Performs services initialization
 | `services_ssl_keys_server_name`  | SSL private key filename                          | `privkey.pem`                                                 |
 | `services_ssl_certs_server_path` | Full path to SSL certificate                      | `{{ services_ssl_dir }}/{{ services_ssl_certs_server_name }}` |
 | `services_ssl_keys_server_path`  | Full path to SSL private key                      | `{{ services_ssl_dir }}/{{ services_ssl_keys_server_name }}`  |
-| `services_bind_host`             | Bind host for services port mapping               | `""`                                                          |
+| `services_bind_ip`               | Bind IP address for services port mapping         | `""`                                                   |
+| `services_email`                 | Email address for services                        | `admin@{{ domain }}`                                          |

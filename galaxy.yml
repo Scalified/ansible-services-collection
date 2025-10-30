@@ -15,6 +15,7 @@ tags:
   - monitoring
   - certbot
   - nginx
+  - nut
 
 repository: https://github.com/scalified/ansible-services-collection
 documentation: https://github.com/scalified/ansible-services-collection

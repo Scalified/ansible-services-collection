@@ -1,0 +1,14 @@
+---
+- name: Copy NUT UI templates
+  scalified.services.template:
+    src: "nut-ui/"
+    dest: "{{ nut_ui_dir }}/"
+    directory_mode: "{{ nut_ui_dir_mode }}"
+    mode: "{{ nut_ui_file_mode }}"
+    owner: "{{ nut_ui_owner }}"
+    group: "{{ nut_ui_group }}"
+
+- name: Start NUT UI
+  community.docker.docker_compose_v2:
+    project_src: "{{ nut_ui_dir }}"
+    state: present

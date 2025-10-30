@@ -3,3 +3,4 @@
 [#1 Certbot](https://github.com/Scalified/ansible-services-collection/issues/1)
 [#3 Nginx](https://github.com/Scalified/ansible-services-collection/issues/3)
 [#5 Watchtower](https://github.com/Scalified/ansible-services-collection/issues/5)
+[#7 NUT UI](https://github.com/Scalified/ansible-services-collection/issues/7)

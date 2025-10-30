@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Vladyslav Baidak <vld.x@hotmail.com>
+  description: NUT UI services for monitoring UPS devices
+  company: Scalified
+  license: MIT
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - nut
+    - ups
+
+dependencies:
+  - role: scalified.services.bootstrap

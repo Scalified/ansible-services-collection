@@ -1,0 +1,100 @@
+services:
+  nut-cgi:
+    image: scalified/nut-cgi:{{ nut_ui_cgi_version }}
+    container_name: {{ nut_ui_cgi_container_name }}
+{% if nut_ui_cgi_watchtower_enabled %}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
+    environment:
+      - "ADMIN_EMAIL={{ nut_ui_cgi_admin_email }}"
+      - "MONITOR_HOSTS={{ nut_ui_cgi_monitor_hosts }}"
+    deploy:
+      resources:
+        limits:
+{% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+    networks:
+      - {{ nut_ui_network.name }}
+{% if nut_ui_networks %}
+{% for network in nut_ui_networks %}
+      - {{ network }}
+{% endfor %}
+{% endif %}
+    healthcheck:
+      test: ["CMD", "curl", "-sfo", "/dev/null", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+  nut-ui:
+    image: ghcr.io/superioone/nut_webgui:{{ nut_ui_version }}
+    container_name: {{ nut_ui_container_name }}
+{% if nut_ui_watchtower_enabled %}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
+    environment:
+      - UPSD_ADDR={{ nut_ui_upsd_address }}
+      - UPSD_PORT={{ nut_ui_upsd_port }}
+      - UPSD_USER={{ nut_ui_upsd_user }}
+      - UPSD_PASS={{ nut_ui_upsd_password }}
+    deploy:
+      resources:
+        limits:
+{% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+    networks:
+      - {{ nut_ui_network.name }}
+{% if nut_ui_networks %}
+{% for network in nut_ui_networks %}
+      - {{ network }}
+{% endfor %}
+{% endif %}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9000/probes/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+  nut-exporter:
+    image: druggeri/nut_exporter:{{ nut_ui_exporter_version }}
+    container_name: {{ nut_ui_exporter_container_name }}
+    environment:
+      - NUT_EXPORTER_SERVER={{ nut_ui_exporter_server }}
+      - NUT_EXPORTER_PORT={{ nut_ui_exporter_port }}
+      - NUT_EXPORTER_USERNAME={{ nut_ui_exporter_username }}
+      - NUT_EXPORTER_PASSWORD={{ nut_ui_exporter_password }}
+      - "NUT_EXPORTER_VARIABLES=
+{%- for variable in nut_ui_exporter_variables +%}
+           {{ variable }}{% if not loop.last %},{% endif %}
+{% endfor +%}
+        "
+    deploy:
+      resources:
+        limits:
+{% for key, value in nut_ui_exporter_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+    networks:
+      - {{ nut_ui_network.name }}
+    restart: always
+
+networks:
+  {{ nut_ui_network.name }}:
+    name: {{ nut_ui_network.name }}
+    driver_opts:
+      com.docker.network.bridge.name: {{ nut_ui_network.interface_name }}
+    ipam:
+      config:
+        - subnet: "{{ nut_ui_network.address }}"
+{% if nut_ui_networks %}
+{% for network in nut_ui_networks %}
+  {{ network }}:
+    external: true
+{% endfor %}
+{% endif %}
