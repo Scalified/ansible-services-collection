@@ -6,3 +6,4 @@
     - scalified.services.nginx
     - scalified.services.watchtower
     - scalified.services.nut_ui
+    - scalified.services.monitor

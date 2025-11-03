@@ -1,6 +1,6 @@
 # Nginx
 
-Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, load balancer, TCP/UDP proxy server, and mail proxy server
+Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, and load balancer
 
 ## Usage
 
@@ -49,6 +49,20 @@ Deploys **Nginx** service - an HTTP web server, reverse proxy, content cache, lo
 | `nginx_user`                    | Basic auth username                   | `admin`                                |
 | `nginx_password`                | Basic auth password                   | `admin`                                |
 
+## Networks
+
+**Nginx** service can be connected to external **Docker** networks to enable communication with other containers.
+These networks must be defined in the `nginx_networks` variable:
+
+```yaml
+nginx_networks:
+  - default
+  - frontend
+  - backend
+```
+
+> The networks listed in `nginx_networks` must already exist before running the `nginx` role
+
 ## Snippets
 
 Reusable configuration snippets can be included into the Nginx server or location blocks for common features
@@ -72,7 +86,7 @@ server {
 
 ## Configuration Files from Roles
 
-Use `nginx_conf_roles` variable to include Nginx configurations from other roles:
+Nginx configuration files from other roles can be included by listing the role names in the `nginx_conf_roles` variable:
 
 ```yaml
 nginx_conf_roles:
@@ -84,10 +98,9 @@ nginx_conf_roles:
 
 ## Configuration Files
 
-Use `nginx_conf_files` to specify custom Nginx configuration templates
+Nginx configuration templates can be included by listing their paths in the `nginx_conf_files` variable:
 
 ```yaml
 nginx_conf_files:
   - templates/appserver.conf
-  - templates/monitoring.conf
 ```

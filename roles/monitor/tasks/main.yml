@@ -1,0 +1,10 @@
+---
+- name: Monitor Role - Monitor service deployment
+  ansible.builtin.debug:
+    msg:
+      - "================================="
+      - "   Monitor: service deployment"
+      - "================================="
+
+- name: Include Monitor tasks
+  ansible.builtin.include_tasks: monitor.yml

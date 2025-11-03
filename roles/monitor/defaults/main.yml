@@ -1,0 +1,40 @@
+---
+monitor_dir: "{{ services_dir }}/monitor"
+monitor_owner: "{{ services_owner }}"
+monitor_group: "{{ services_group }}"
+monitor_dir_mode: "{{ services_dir_mode }}"
+monitor_file_mode: "{{ services_file_mode }}"
+monitor_conf_roles: []
+
+monitor_grafana_version: latest
+monitor_grafana_container_name: monitor-grafana
+monitor_grafana_watchtower_enabled: "{{ services_watchtower_enabled }}"
+monitor_grafana_user: admin
+monitor_grafana_password: admin
+monitor_grafana_slack_webhook_url: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+monitor_grafana_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 1G
+monitor_grafana_networks: []
+
+monitor_prometheus_version: latest
+monitor_prometheus_container_name: monitor-prometheus
+monitor_prometheus_watchtower_enabled: "{{ services_watchtower_enabled }}"
+monitor_prometheus_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 500M
+monitor_prometheus_networks: []
+
+monitor_cadvisor_version: latest
+monitor_cadvisor_container_name: monitor-cadvisor
+monitor_cadvisor_watchtower_enabled: "{{ services_watchtower_enabled }}"
+monitor_cadvisor_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 128M
+
+monitor_node_exporter_version: latest
+monitor_node_exporter_container_name: monitor-node-exporter
+monitor_node_exporter_watchtower_enabled: "{{ services_watchtower_enabled }}"
+monitor_node_exporter_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 128M

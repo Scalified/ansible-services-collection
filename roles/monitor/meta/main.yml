@@ -1,15 +1,17 @@
 ---
 galaxy_info:
   author: Vladyslav Baidak <vld.x@hotmail.com>
-  description: Nginx service - an HTTP web server, reverse proxy, content cache, and load balancer
+  description: Monitor service including Prometheus, Grafana, cAdvisor, and Node Exporter
   company: Scalified
   license: MIT
   min_ansible_version: "2.16"
 
   galaxy_tags:
-    - nginx
-    - webserver
-    - proxy
+    - monitoring
+    - grafana
+    - prometheus
+    - cadvisor
+    - node-exporter
 
 dependencies:
   - role: scalified.services.bootstrap

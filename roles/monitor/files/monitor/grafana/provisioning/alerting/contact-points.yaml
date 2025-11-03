@@ -1,0 +1,13 @@
+apiVersion: 1
+deleteContactPoints:
+  - orgId: 1
+    uid: ""
+contactPoints:
+  - orgId: 1
+    name: grafana-slack
+    receivers:
+      - uid: bdpise58vwxdtf
+        type: slack
+        settings:
+          url: ${SLACK_WEBHOOK_URL}
+        disableResolveMessage: false

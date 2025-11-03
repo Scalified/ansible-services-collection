@@ -54,9 +54,3 @@ nut_ui_exporter_variables:
 nut_ui_exporter_deploy_resources_limits:
   cpus: "0.50"
   memory: 500M
-
-nut_ui_network:
-  name: nut-ui
-  address: 192.168.153.0/24
-  interface_name: "br-nut-ui"
-nut_ui_networks: []

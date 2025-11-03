@@ -1,0 +1,49 @@
+---
+- name: Copy Monitor templates
+  scalified.services.template:
+    src: "monitor/"
+    dest: "{{ monitor_dir }}/"
+    directory_mode: "{{ monitor_dir_mode }}"
+    mode: "{{ monitor_file_mode }}"
+    owner: "{{ monitor_owner }}"
+    group: "{{ monitor_group }}"
+
+- name: Copy Monitor files
+  ansible.builtin.copy:
+    src: "monitor/"
+    dest: "{{ monitor_dir }}"
+    directory_mode: "{{ monitor_dir_mode }}"
+    mode: "{{ monitor_file_mode }}"
+    owner: "{{ monitor_owner }}"
+    group: "{{ monitor_group }}"
+
+- name: Copy Monitor role configuration files
+  ansible.builtin.copy:
+    src: "{{ monitor_conf_role | scalified.services.select_path(role_path, playbook_dir) }}/files/monitor/"
+    dest: "{{ monitor_dir }}"
+    directory_mode: "{{ monitor_dir_mode }}"
+    mode: "{{ monitor_file_mode }}"
+    owner: "{{ monitor_owner }}"
+    group: "{{ monitor_group }}"
+  loop: "{{ monitor_conf_roles }}"
+  loop_control:
+    loop_var: monitor_conf_role
+  when: monitor_conf_roles | length > 0
+
+- name: Copy Monitor role configuration templates
+  scalified.services.template:
+    src: "{{ monitor_conf_role | scalified.services.select_path(role_path, playbook_dir) }}/templates/monitor/"
+    dest: "{{ monitor_dir }}/"
+    directory_mode: "{{ monitor_dir_mode }}"
+    mode: "{{ monitor_file_mode }}"
+    owner: "{{ monitor_owner }}"
+    group: "{{ monitor_group }}"
+  loop: "{{ monitor_conf_roles }}"
+  loop_control:
+    loop_var: monitor_conf_role
+  when: monitor_conf_role | length > 0
+
+- name: Start Monitor
+  community.docker.docker_compose_v2:
+    project_src: "{{ monitor_dir }}"
+    state: present

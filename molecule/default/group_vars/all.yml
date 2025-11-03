@@ -38,3 +38,12 @@ nut_users_admin_name: nutuser
 nut_users_admin_password: nutpassword
 nut_users_monitor_name: nutuser
 nut_users_monitor_password: nutpassword
+
+# Monitor
+monitor_dir: "{{ services_dir }}/monitor"
+monitor_grafana_container_name: monitor-grafana
+monitor_prometheus_container_name: monitor-prometheus
+monitor_cadvisor_container_name: monitor-cadvisor
+monitor_node_exporter_container_name: monitor-node-exporter
+monitor_conf_roles:
+  - scalified.services.nut_ui

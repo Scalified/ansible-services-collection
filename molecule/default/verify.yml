@@ -6,3 +6,4 @@
     - nginx
     - watchtower
     - nut_ui
+    - monitor

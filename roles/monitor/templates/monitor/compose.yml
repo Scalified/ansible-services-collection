@@ -1,0 +1,155 @@
+---
+services:
+  grafana:
+    image: grafana/grafana:{{ monitor_grafana_version }}
+    container_name: {{ monitor_grafana_container_name }}
+    labels:
+{% if monitor_grafana_watchtower_enabled %}
+      com.centurylinklabs.watchtower.enable: "true"
+{% endif %}
+      org.label-schema.group: "monitor"
+    environment:
+      - 'GF_SECURITY_ADMIN_USER={{ monitor_grafana_user }}'
+      - 'GF_SECURITY_ADMIN_PASSWORD={{ monitor_grafana_password }}'
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=https://monitor.{{ domain }}
+{% if monitor_grafana_slack_webhook_url %}
+      - SLACK_WEBHOOK_URL={{ monitor_grafana_slack_webhook_url }}
+{% endif %}
+{% if monitor_grafana_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in monitor_grafana_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    volumes:
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana:/var/lib/grafana
+    networks:
+      - monitor
+{% for network in monitor_grafana_networks | default([]) %}
+      - {{ network }}
+{% endfor %}
+    healthcheck:
+      test: ["CMD", "curl", "-sfo", "/dev/null", "localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:{{ monitor_prometheus_version }}
+    container_name: {{ monitor_prometheus_container_name }}
+    user: root
+    labels:
+{% if monitor_prometheus_watchtower_enabled %}
+      com.centurylinklabs.watchtower.enable: "true"
+{% endif %}
+      org.label-schema.group: "monitor"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--log.level=error'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=7d'
+{% if monitor_prometheus_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in monitor_prometheus_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/scrape-configs:/etc/prometheus/scrape-configs:ro
+      - prometheus:/prometheus
+    networks:
+      - monitor
+{% for network in monitor_prometheus_networks | default([]) %}
+      - {{ network }}
+{% endfor %}
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:{{ monitor_cadvisor_version }}
+    container_name: {{ monitor_cadvisor_container_name }}
+    labels:
+{% if monitor_cadvisor_watchtower_enabled %}
+      com.centurylinklabs.watchtower.enable: "true"
+{% endif %}
+      org.label-schema.group: "monitor"
+    command: -logtostderr -docker_only
+{% if monitor_cadvisor_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in monitor_cadvisor_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    volumes:
+      - /:/rootfs:ro
+      - /sys:/sys:ro
+      - /var/run:/var/run:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    networks:
+      - monitor
+    restart: always
+
+  node-exporter:
+    image: prom/node-exporter:{{ monitor_node_exporter_version }}
+    container_name: {{ monitor_node_exporter_container_name }}
+    labels:
+{% if monitor_node_exporter_watchtower_enabled %}
+      com.centurylinklabs.watchtower.enable: "true"
+{% endif %}
+      org.label-schema.group: "monitor"
+    command:
+      - '--path.sysfs=/host/sys'
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs' 
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      - '--no-collector.ipvs'
+{% if monitor_node_exporter_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in monitor_node_exporter_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - monitor
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9100"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+volumes:
+  grafana:
+  prometheus:
+
+networks:
+  monitor:
+    name: monitor
+    driver_opts:
+      com.docker.network.bridge.name: br-monitor
+{% for network in (monitor_grafana_networks + monitor_prometheus_networks) | default([]) %}
+  {{ network }}:
+    external: true
+{% endfor %}
