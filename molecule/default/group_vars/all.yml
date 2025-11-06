@@ -5,6 +5,12 @@ domain: "example.com"
 # System
 system_update_only: true
 
+# SSL
+ssl_certs_server_dir: "/etc/letsencrypt/live/{{ domain }}"
+ssl_certs_server_name: "fullchain.pem"
+ssl_keys_server_dir: "/etc/letsencrypt/live/{{ domain }}"
+ssl_keys_server_name: "privkey.pem"
+
 # Bootstrap
 services_dir: /opt/services
 services_owner: "{{ ansible_user_id }}"
@@ -13,15 +19,21 @@ services_dir_mode: "0770"
 services_file_mode: "0660"
 
 # Certbot
-certbot_domain: "stub.com"
+certbot_dir: "{{ services_dir }}/certbot"
+certbot_container_name: certbot
+certbot_domain: "{{ domain }}"
 certbot_cf_email: "test@example.com"
 certbot_cf_api_token: "1234567890abcdef1234567890abcdef1234"
-certbot_dir: "{{ services_dir }}/certbot"
 
 # Nginx
-nginx_ssl_keys_server_path: "/etc/ssl/private/{{ domain }}.key"
-nginx_ssl_certs_server_path: "/etc/ssl/certs/{{ domain }}.crt"
+nginx_ssl_keys_server_path: "{{ ssl_keys_server_dir }}/{{ ssl_keys_server_name }}"
+nginx_ssl_certs_server_path: "{{ ssl_certs_server_dir }}/{{ ssl_certs_server_name }}"
 nginx_dir: "{{ services_dir }}/nginx"
+nginx_conf_dir: "{{ nginx_dir }}/nginx/conf.d"
+nginx_container_name: nginx
+nginx_conf_roles:
+  - scalified.services.nut_ui
+  - scalified.services.monitor
 nginx_conf_files:
   - "{{ molecule_scenario_directory }}/roles/nginx/templates/htpasswd.conf"
 nginx_user: testadmin
@@ -29,12 +41,26 @@ nginx_password: testadminpassword
 
 # Watchtower
 watchtower_dir: "{{ services_dir }}/watchtower"
+watchtower_container_name: watchtower
 
 # NUT UI
 nut_ui_dir: "{{ services_dir }}/nut-ui"
+nut_ui_cgi_container_name: nut-ui-cgi
+nut_ui_container_name: nut-ui
+nut_ui_exporter_container_name: nut-exporter
+
 nut_ups_name: eaton
 nut_upsd_listen_port: 3493
 nut_users_admin_name: nutuser
 nut_users_admin_password: nutpassword
 nut_users_monitor_name: nutuser
 nut_users_monitor_password: nutpassword
+
+# Monitor
+monitor_dir: "{{ services_dir }}/monitor"
+monitor_grafana_container_name: monitor-grafana
+monitor_prometheus_container_name: monitor-prometheus
+monitor_cadvisor_container_name: monitor-cadvisor
+monitor_node_exporter_container_name: monitor-node-exporter
+monitor_conf_roles:
+  - scalified.services.nut_ui

@@ -1,0 +1,364 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: containers
+    folder: node
+    interval: 5m
+    rules:
+      - uid: eectv4n3zoum8c
+        title: High Container CPU Usage
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              disableTextWrap: false
+              editorMode: code
+              expr: round(rate(container_cpu_usage_seconds_total{container_label_org_label_schema_group!="monitor"}[$__rate_interval]), 0.0001)
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 30000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: becmssuh0vbi8e
+        panelId: 8
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: becmssuh0vbi8e
+          __panelId__: "8"
+          description: Container CPU usage is at {{ humanizePercentage $values.A.Value }}
+          summary: High container CPU usage
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: aecu55mf1mr5sa
+        title: High Container Memory Usage
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              disableTextWrap: false
+              editorMode: code
+              expr: round(container_memory_rss{container_label_org_label_schema_group!="monitor"} / clamp_min(container_spec_memory_limit_bytes{container_label_org_label_schema_group!="monitor"}, 1073741824), 0.0001)
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 30000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: becmssuh0vbi8e
+        panelId: 11
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: becmssuh0vbi8e
+          __panelId__: "11"
+          description: Container Memory usage is at {{ humanizePercentage $values.A.Value }}
+          summary: High container Memory usage
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+  - orgId: 1
+    name: host
+    folder: node
+    interval: 5m
+    rules:
+      - uid: aeoce0jxruk1sb
+        title: High Host Temperature
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              editorMode: code
+              expr: node_hwmon_temp_celsius
+              instant: true
+              intervalMs: 1000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: becmxzen121a8a
+        panelId: 16
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: becmxzen121a8a
+          __panelId__: "16"
+          description: Host {{ $labels.chip }} / {{ $labels.sensor }} Temperature is {{ printf "%.0f\u00B0C" $values.A.Value }}
+          summary: High Host Temperature
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: becqdbo7pq4u8a
+        title: High Host CPU Usage
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              disableTextWrap: false
+              editorMode: code
+              expr: round(1 - avg(rate(node_cpu_seconds_total{mode="idle"}[$__rate_interval])) by (instance), 0.0001)
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 30000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: becmxzen121a8a
+        panelId: 5
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: becmxzen121a8a
+          __panelId__: "5"
+          description: Host CPU usage is at {{ humanizePercentage $values.A.Value }}
+          summary: High Host CPU usage
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: eecqgz94cc4xsa
+        title: High Host Memory Load
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              disableTextWrap: false
+              editorMode: code
+              expr: round(sum((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes) by (instance), 0.0001)
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 30000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        dashboardUid: becmxzen121a8a
+        panelId: 6
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          __dashboardUid__: becmxzen121a8a
+          __panelId__: "6"
+          description: Host Memory usage is at {{ humanizePercentage $values.A.Value }}
+          summary: High Host Memory load
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack
+      - uid: eecqh8kr5oef4c
+        title: High Host Storage Usage
+        condition: B
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              disableTextWrap: false
+              editorMode: code
+              expr: round((node_filesystem_size_bytes{device!~"ramfs|tmpfs"} - node_filesystem_free_bytes{device!~"ramfs|tmpfs"}) /node_filesystem_size_bytes{device!~"ramfs|tmpfs"}, 0.0001)
+              fullMetaSearch: false
+              includeNullMetadata: true
+              instant: true
+              intervalMs: 30000
+              legendFormat: __auto
+              maxDataPoints: 43200
+              range: false
+              refId: A
+              useBackend: false
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              conditions:
+                - evaluator:
+                    params:
+                      - 0.85
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              datasource:
+                type: __expr__
+                uid: __expr__
+              expression: A
+              intervalMs: 1000
+              maxDataPoints: 43200
+              refId: B
+              type: threshold
+        noDataState: NoData
+        execErrState: Error
+        for: 5m
+        annotations:
+          description: Host Storage usage is at {{ humanizePercentage $values.A.Value }}
+          summary: High Host Storage usage
+        isPaused: false
+        notification_settings:
+          receiver: grafana-slack

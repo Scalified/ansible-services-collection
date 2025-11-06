@@ -19,7 +19,7 @@ This is an **Ansible Collection** for streamlined services, published as: `scali
 ## Repository Structure
 
 - `roles/` — Role definitions (e.g., nginx, monitor)
-- `molecule/default/` — Molecule test scenario configuration
+- `extensions/molecule/default/` — Molecule test scenario configuration
 - `galaxy.yml` — Ansible Galaxy metadata
 - `.ansible-lint.yml` — Ansible Lint rules configuration
 
@@ -40,7 +40,7 @@ This is an **Ansible Collection** for streamlined services, published as: `scali
 ## Molecule Tests
 
 * Run integration tests with: molecule test.
-* Every file with logic must have a corresponding test file in: `molecule/default/roles/<role>/tasks/`
-* Role-level verifications are placed in: `molecule/default/verify.yml`
+* Every file with logic must have a corresponding test file in: `extensions/molecule/default/roles/<role>/tasks/`
+* Role-level verifications are placed in: `extensions/molecule/default/verify.yml`
 * Use the following test files as templates:
-    * `molecule/default/certbot/tasks/certbot.yml` — verify files and directories attributes and content.
+    * `extensions/molecule/default/certbot/tasks/certbot.yml` — verify files and directories attributes and content.

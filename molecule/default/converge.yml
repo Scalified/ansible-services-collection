@@ -2,7 +2,8 @@
 - name: Converge
   hosts: all
   roles:
-    - scalified.services.certbot
-    - scalified.services.nginx
     - scalified.services.watchtower
+    - scalified.services.certbot
     - scalified.services.nut_ui
+    - scalified.services.monitor
+    - scalified.services.nginx

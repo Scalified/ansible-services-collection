@@ -9,19 +9,19 @@ services:
     environment:
       - "ADMIN_EMAIL={{ nut_ui_cgi_admin_email }}"
       - "MONITOR_HOSTS={{ nut_ui_cgi_monitor_hosts }}"
+{% if nut_ui_cgi_deploy_resources_limits %}
     deploy:
       resources:
         limits:
 {% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
           {{ key }}: "{{ value }}"
 {% endfor %}
+{% endif %}
     networks:
-      - {{ nut_ui_network.name }}
-{% if nut_ui_networks %}
-{% for network in nut_ui_networks %}
+      - nut-ui
+{% for network in nut_ui_networks | default([]) %}
       - {{ network }}
 {% endfor %}
-{% endif %}
     healthcheck:
       test: ["CMD", "curl", "-sfo", "/dev/null", "http://localhost:8080/health"]
       interval: 30s
@@ -41,19 +41,19 @@ services:
       - UPSD_PORT={{ nut_ui_upsd_port }}
       - UPSD_USER={{ nut_ui_upsd_user }}
       - UPSD_PASS={{ nut_ui_upsd_password }}
+{% if nut_ui_deploy_resources_limits %}
     deploy:
       resources:
         limits:
-{% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
+{% for key, value in nut_ui_deploy_resources_limits.items() %}
           {{ key }}: "{{ value }}"
 {% endfor %}
+{% endif %}
     networks:
-      - {{ nut_ui_network.name }}
-{% if nut_ui_networks %}
-{% for network in nut_ui_networks %}
+      - nut-ui
+{% for network in nut_ui_networks | default([]) %}
       - {{ network }}
 {% endfor %}
-{% endif %}
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9000/probes/health"]
       interval: 30s
@@ -70,31 +70,28 @@ services:
       - NUT_EXPORTER_USERNAME={{ nut_ui_exporter_username }}
       - NUT_EXPORTER_PASSWORD={{ nut_ui_exporter_password }}
       - "NUT_EXPORTER_VARIABLES=
-{%- for variable in nut_ui_exporter_variables +%}
+{%- for variable in nut_ui_exporter_variables | default([]) +%}
            {{ variable }}{% if not loop.last %},{% endif %}
 {% endfor +%}
         "
+{% if nut_ui_exporter_deploy_resources_limits %}
     deploy:
       resources:
         limits:
 {% for key, value in nut_ui_exporter_deploy_resources_limits.items() %}
           {{ key }}: "{{ value }}"
 {% endfor %}
+{% endif %}
     networks:
-      - {{ nut_ui_network.name }}
+      - nut-ui
     restart: always
 
 networks:
-  {{ nut_ui_network.name }}:
-    name: {{ nut_ui_network.name }}
+  nut-ui:
+    name: nut-ui
     driver_opts:
-      com.docker.network.bridge.name: {{ nut_ui_network.interface_name }}
-    ipam:
-      config:
-        - subnet: "{{ nut_ui_network.address }}"
-{% if nut_ui_networks %}
-{% for network in nut_ui_networks %}
+      com.docker.network.bridge.name: br-nut-ui
+{% for network in nut_ui_networks | default([]) %}
   {{ network }}:
     external: true
 {% endfor %}
-{% endif %}

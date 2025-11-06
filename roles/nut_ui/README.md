@@ -47,7 +47,6 @@ Deploys **NUT (Network UPS Tools)** UI services for monitoring UPS devices:
 | `nut_ui_exporter_password`                | NUT server password for exporter          | `{{ nut_users_monitor_password }}`                                                                 |
 | `nut_ui_exporter_variables`               | List of UPS variables to export           | See [NUT Exporter Variables](#nut-exporter-variables)                                              |
 | `nut_ui_exporter_deploy_resources_limits` | Container resource limits for exporter    | `{cpus: "0.50", memory: 500M}`                                                                     |
-| `nut_ui_network`                          | Docker network configuration              | `{name: nut-ui, address: 192.168.153.0/24, interface_name: "br-{{ nut_ui_network.name }}"}`        |
 | `nut_ui_networks`                         | Additional custom Docker networks         | `[]`                                                                                               |
 
 ## NUT Variables
@@ -71,6 +70,18 @@ The following variables from `scalified.setup.nut` are referenced in the default
 
 > Without these variables defined, `nut_ui_*` variables that depend on them in their default values must be set manually to ensure proper connectivity to the NUT daemon
 
+## Networks
+
+**NUT UI** services can be connected to external **Docker** networks to enable communication with other containers such as reverse proxies or monitoring tools.
+These networks must be defined in the `nut_ui_networks` variable:
+
+```yaml
+nut_ui_networks:
+  - nginx
+```
+
+> The networks listed in `nut_ui_networks` must already exist before running the `nut_ui` role
+
 ## Nginx Configuration
 
 The role provides an **Nginx** [`nut-ui.conf`](templates/nginx/nut-ui.conf) configuraiton file that defines:
@@ -79,7 +90,7 @@ The role provides an **Nginx** [`nut-ui.conf`](templates/nginx/nut-ui.conf) conf
 * A route for `/`, serving the modern **NUT Web UI**
 * A route for `/cgi`, serving the classic **NUT CGI interface**
 
-## Grafana Configuration
+## Monitor Grafana
 
 The role provides **Grafana** [`grafana/`](files/monitor/grafana/) configuration files including dashboards and alert rules for UPS monitoring
 
@@ -99,7 +110,7 @@ The role provides **Grafana** [`grafana/`](files/monitor/grafana/) configuration
   - Output voltage outside safe range
 - Alerts configured for notifications
 
-## NUT Exporter
+## Monitor Prometheus
 
 **NUT Exporter** collects UPS metrics from the NUT daemon and exposes them in a format suitable for **Prometheus** monitoring
 

@@ -1,4 +1,5 @@
-roles/certbot/templates/compose.yml yamllint!skip
-roles/nginx/templates/compose.yml yamllint!skip
 roles/watchtower/templates/compose.yml yamllint!skip
+roles/certbot/templates/compose.yml yamllint!skip
 roles/nut_ui/templates/nut-ui/compose.yml yamllint!skip
+roles/monitor/templates/monitor/compose.yml yamllint!skip
+roles/nginx/templates/compose.yml yamllint!skip

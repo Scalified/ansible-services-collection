@@ -19,8 +19,8 @@
     - name: Assert Nginx files mode
       ansible.builtin.assert:
         that: file.mode | string == services_file_mode
-        fail_msg: "File {{ file.path }} has incorrect mode: {{ file.mode }}"
-        success_msg: "File {{ file }} has correct mode"
+        fail_msg: "File '{{ file.path }}' has incorrect mode: {{ file.mode }}"
+        success_msg: "File '{{ file.path }}' has correct mode"
       loop: >-
         {{ nginx_files_stat.results
           | map(attribute='stat')
@@ -36,9 +36,9 @@
           - file.pw_name == services_owner
           - file.gr_name == services_group
         fail_msg: >-
-          File {{ file.path }} has incorrect ownership:
+          File '{{ file.path }}' has incorrect ownership:
           {{ file.pw_name }}:{{ file.gr_name }}
-        success_msg: "File {{ file.path }} has correct ownership"
+        success_msg: "File '{{ file.path }}' has correct ownership"
       loop: >-
         {{ nginx_files_stat.results
           | map(attribute='stat')
@@ -47,6 +47,19 @@
           | map('items2dict') }}
       loop_control:
         loop_var: file
+
+    - name: Assert Nginx configuration files exist
+      ansible.builtin.assert:
+        that: >-
+          configuration_file in
+          (nginx_files_stat.results | map(attribute='stat') | map(attribute='path'))
+        fail_msg: "Nginx configuration file '{{ configuration_file }}' does not exist"
+        success_msg: "Nginx configuration file '{{ configuration_file }}' exists"
+      loop:
+        - "{{ nginx_conf_dir }}/monitor.conf"
+        - "{{ nginx_conf_dir }}/nut-ui.conf"
+      loop_control:
+        loop_var: configuration_file
 
 - name: Verify Nginx files content
   block:
@@ -64,8 +77,8 @@
     - name: Assert Nginx files have Unix line endings
       ansible.builtin.assert:
         that: "'\\r\\n' not in (file.content | b64decode)"
-        fail_msg: "File {{ file.file }} contains Windows line endings (CRLF)"
-        success_msg: "File {{ file.file }} has Unix line endings (LF)"
+        fail_msg: "File '{{ file.file }}' contains Windows line endings (CRLF)"
+        success_msg: "File '{{ file.file }}' has Unix line endings (LF)"
       loop: >-
         {{ nginx_files_slurp.results
           | map('dict2items')
@@ -115,3 +128,34 @@
           - "'Authorization Required' in nginx_auth_required_result.content"
         fail_msg: "Authentication required failed"
         success_msg: "Authentication required succeeded"
+
+- name: Verify Nginx Docker containers
+  block:
+    - name: Get Nginx containers info
+      community.docker.docker_container_info:
+        name: "{{ container_name }}"
+      register: nginx_containers_info
+      loop:
+        - "{{ nginx_container_name }}"
+      loop_control:
+        loop_var: container_name
+
+    - name: Assert Nginx containers are running and healthy
+      ansible.builtin.assert:
+        that:
+          - container_info.State.Status == "running"
+          - container_info.State.Health.Status == "healthy"
+        fail_msg: >-
+          Container '{{ container_info.Name }}' has incorrect state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
+        success_msg: >-
+          Container '{{ container_info.Name }}' has correct state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
+      loop: >-
+        {{ nginx_containers_info.results
+          | map(attribute='container')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['Name', 'State'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: container_info
