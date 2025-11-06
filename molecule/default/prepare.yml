@@ -3,11 +3,3 @@
   hosts: all
   roles:
     - scalified.setup.ssl
-  tasks:
-    - name: Install packages
-      ansible.builtin.package:
-        name:
-          - python3-requests
-        state: present
-      retries: 3
-      delay: 10

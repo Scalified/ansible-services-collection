@@ -3,3 +3,5 @@ exclude_paths:
   - .cache/
   - .github/
   - tests/
+  - roles/**/files/monitor/
+  - roles/**/templates/monitor/

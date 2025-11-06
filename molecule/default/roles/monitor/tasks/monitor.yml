@@ -108,8 +108,12 @@
         that:
           - container_info.State.Status == "running"
           - container_info.State.Health.Status == "healthy"
-        fail_msg: "Container {{ container_info.Name }} has incorrect state: {{ container_info.State.Status }}"
-        success_msg: "Container {{ container_info.Name }} has correct state: {{ container_info.State.Status }}"
+        fail_msg: >-
+          Container '{{ container_info.Name }}' has incorrect state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
+        success_msg: >-
+          Container '{{ container_info.Name }}' has correct state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
       loop: >-
         {{ monitor_containers_info.results
           | map(attribute='container')

@@ -2,8 +2,8 @@
 - name: Verify
   hosts: all
   roles:
-    - certbot
-    - nginx
     - watchtower
+    - certbot
     - nut_ui
     - monitor
+    - nginx

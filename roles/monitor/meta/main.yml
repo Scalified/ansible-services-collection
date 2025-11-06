@@ -11,7 +11,6 @@ galaxy_info:
     - grafana
     - prometheus
     - cadvisor
-    - node-exporter
 
 dependencies:
   - role: scalified.services.bootstrap

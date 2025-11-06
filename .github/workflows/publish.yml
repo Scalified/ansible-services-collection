@@ -10,7 +10,8 @@ jobs:
     name: Publish to Ansible Galaxy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Build collection
         id: build-collection
         uses: ansible-community/github-action-build-collection@main
