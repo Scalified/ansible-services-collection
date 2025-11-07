@@ -18,30 +18,16 @@ services_group: root
 services_dir_mode: "0770"
 services_file_mode: "0660"
 
+# Watchtower
+watchtower_dir: "{{ services_dir }}/watchtower"
+watchtower_container_name: watchtower
+
 # Certbot
 certbot_dir: "{{ services_dir }}/certbot"
 certbot_container_name: certbot
 certbot_domain: "{{ domain }}"
 certbot_cf_email: "test@example.com"
 certbot_cf_api_token: "1234567890abcdef1234567890abcdef1234"
-
-# Nginx
-nginx_ssl_keys_server_path: "{{ ssl_keys_server_dir }}/{{ ssl_keys_server_name }}"
-nginx_ssl_certs_server_path: "{{ ssl_certs_server_dir }}/{{ ssl_certs_server_name }}"
-nginx_dir: "{{ services_dir }}/nginx"
-nginx_conf_dir: "{{ nginx_dir }}/nginx/conf.d"
-nginx_container_name: nginx
-nginx_conf_roles:
-  - scalified.services.nut_ui
-  - scalified.services.monitor
-nginx_conf_files:
-  - "{{ molecule_scenario_directory }}/roles/nginx/templates/htpasswd.conf"
-nginx_user: testadmin
-nginx_password: testadminpassword
-
-# Watchtower
-watchtower_dir: "{{ services_dir }}/watchtower"
-watchtower_container_name: watchtower
 
 # NUT UI
 nut_ui_dir: "{{ services_dir }}/nut-ui"
@@ -64,3 +50,22 @@ monitor_cadvisor_container_name: monitor-cadvisor
 monitor_node_exporter_container_name: monitor-node-exporter
 monitor_conf_roles:
   - scalified.services.nut_ui
+
+# Nginx
+nginx_ssl_keys_server_path: "{{ ssl_keys_server_dir }}/{{ ssl_keys_server_name }}"
+nginx_ssl_certs_server_path: "{{ ssl_certs_server_dir }}/{{ ssl_certs_server_name }}"
+nginx_dir: "{{ services_dir }}/nginx"
+nginx_conf_dir: "{{ nginx_dir }}/nginx/conf.d"
+nginx_container_name: nginx
+nginx_conf_roles:
+  - scalified.services.nut_ui
+  - scalified.services.monitor
+  - scalified.services.deluge
+nginx_conf_files:
+  - "{{ molecule_scenario_directory }}/roles/nginx/templates/htpasswd.conf"
+nginx_user: testadmin
+nginx_password: testadminpassword
+
+# Deluge
+deluge_dir: "{{ services_dir }}/deluge"
+deluge_container_name: deluge

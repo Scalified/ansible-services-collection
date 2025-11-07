@@ -1,0 +1,103 @@
+---
+- name: Verify Deluge files attributes
+  block:
+    - name: Get the list of Deluge files
+      ansible.builtin.find:
+        paths: "{{ deluge_dir }}"
+        recurse: false
+        file_type: file
+      register: deluge_files
+
+    - name: Stat Deluge files
+      ansible.builtin.stat:
+        path: "{{ file }}"
+      register: deluge_files_stat
+      loop: "{{ deluge_files.files | map(attribute='path') }}"
+      loop_control:
+        loop_var: file
+
+    - name: Assert Deluge files mode
+      ansible.builtin.assert:
+        that: file.mode | string == services_file_mode
+        fail_msg: "File '{{ file.path }}' has incorrect mode: {{ file.mode }}"
+        success_msg: "File '{{ file.path }}' has correct mode"
+      loop: >-
+        {{ deluge_files_stat.results
+          | map(attribute='stat')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['path', 'mode'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+    - name: Assert Deluge files ownership
+      ansible.builtin.assert:
+        that:
+          - file.pw_name == services_owner
+          - file.gr_name == services_group
+        fail_msg: >-
+          File '{{ file.path }}' has incorrect ownership:
+          {{ file.pw_name }}:{{ file.gr_name }}
+        success_msg: "File '{{ file.path }}' has correct ownership"
+      loop: >-
+        {{ deluge_files_stat.results
+          | map(attribute='stat')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['path', 'pw_name', 'gr_name'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+- name: Verify Deluge files content
+  block:
+    - name: Slurp Deluge files content
+      ansible.builtin.slurp:
+        src: "{{ file }}"
+      register: deluge_files_slurp
+      loop: "{{ deluge_files.files | map(attribute='path') }}"
+      loop_control:
+        loop_var: file
+
+    - name: Assert Deluge files have Unix line endings
+      ansible.builtin.assert:
+        that: "'\\r\\n' not in (file.content | b64decode)"
+        fail_msg: "File '{{ file.file }}' contains Windows line endings (CRLF)"
+        success_msg: "File '{{ file.file }}' has Unix line endings (LF)"
+      loop: >-
+        {{ deluge_files_slurp.results
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['file', 'content'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: file
+
+- name: Verify Deluge Docker containers
+  block:
+    - name: Get Deluge containers info
+      community.docker.docker_container_info:
+        name: "{{ container_name }}"
+      register: deluge_containers_info
+      loop:
+        - "{{ deluge_container_name }}"
+      loop_control:
+        loop_var: container_name
+
+    - name: Assert Deluge containers are running and healthy
+      ansible.builtin.assert:
+        that:
+          - container_info.State.Status == "running"
+          - container_info.State.Health.Status == "healthy"
+        fail_msg: >-
+          Container '{{ container_info.Name }}' has incorrect state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
+        success_msg: >-
+          Container '{{ container_info.Name }}' has correct state:
+          status='{{ container_info.State.Status }}', health='{{ container_info.State.Health.Status }}'
+      loop: >-
+        {{ deluge_containers_info.results
+          | map(attribute='container')
+          | map('dict2items')
+          | map('selectattr', 'key', 'in', ['Name', 'State'])
+          | map('items2dict') }}
+      loop_control:
+        loop_var: container_info

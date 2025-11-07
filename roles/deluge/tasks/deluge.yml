@@ -1,0 +1,14 @@
+---
+- name: Copy Deluge templates
+  scalified.services.template:
+    src: "deluge/"
+    dest: "{{ deluge_dir }}/"
+    directory_mode: "{{ deluge_dir_mode }}"
+    mode: "{{ deluge_file_mode }}"
+    owner: "{{ deluge_owner }}"
+    group: "{{ deluge_group }}"
+
+- name: Start Deluge
+  community.docker.docker_compose_v2:
+    project_src: "{{ deluge_dir }}"
+    state: present

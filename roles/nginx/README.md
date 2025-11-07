@@ -63,6 +63,23 @@ nginx_networks:
 
 > The networks listed in `nginx_networks` must already exist before running the `nginx` role
 
+## Ports
+
+**Nginx** service exposes the following ports:
+
+| Port  | Protocol | Description |
+|-------|----------|-------------|
+| `80`  | TCP      | HTTP        |
+| `443` | TCP      | HTTPS       |
+
+Exposed ports must be defined in the `nginx_ports` variable:
+
+```yaml
+nginx_ports:
+  - "80:80/tcp"
+  - "443:443/tcp"
+```
+
 ## Snippets
 
 Reusable configuration snippets can be included into the Nginx server or location blocks for common features

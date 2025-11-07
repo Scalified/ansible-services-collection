@@ -10,7 +10,6 @@ watchtower_container_name: watchtower
 watchtower_deploy_resources_limits:
   cpus: "0.50"
   memory: 500M
-
 watchtower_timezone: "{{ services_timezone }}"
 watchtower_cleanup: true
 watchtower_remove_volumes: true
