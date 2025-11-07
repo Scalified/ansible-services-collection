@@ -1,0 +1,14 @@
+---
+galaxy_info:
+  author: Vladyslav Baidak <vld.x@hotmail.com>
+  description: Deluge service - a lightweight, Free Software, cross-platform BitTorrent client
+  company: Scalified
+  license: MIT
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - deluge
+    - torrent
+
+dependencies:
+  - role: scalified.services.bootstrap

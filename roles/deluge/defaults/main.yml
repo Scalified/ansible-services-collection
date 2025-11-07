@@ -1,0 +1,22 @@
+---
+deluge_dir: "{{ services_dir }}/deluge"
+deluge_config_dir: "{{ deluge_dir }}/config"
+deluge_owner: "{{ services_owner }}"
+deluge_group: "{{ services_group }}"
+deluge_dir_mode: "{{ services_dir_mode }}"
+deluge_file_mode: "{{ services_file_mode }}"
+
+deluge_version: latest
+deluge_container_name: deluge
+deluge_watchtower_enabled: "{{ services_watchtower_enabled }}"
+deluge_timezone: "{{ services_timezone }}"
+deluge_deploy_resources_limits:
+  cpus: "2.0"
+  memory: 4G
+deluge_volumes: []
+deluge_networks: []
+deluge_web_port: 8112
+deluge_client_port: 58846
+deluge_bind_ip: "{{ services_bind_ip }}"
+deluge_ports:
+  - "{{ deluge_client_port }}:{{ deluge_client_port }}/tcp"

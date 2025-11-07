@@ -1,0 +1,10 @@
+---
+- name: Deluge Role - Deluge service deployment
+  ansible.builtin.debug:
+    msg:
+      - "================================="
+      - "   Deluge: service deployment"
+      - "================================="
+
+- name: Include Deluge tasks
+  ansible.builtin.include_tasks: deluge.yml

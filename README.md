@@ -51,6 +51,7 @@ ansible-galaxy collection install -r requirements.yml
 * [Watchtower](roles/watchtower/README.md)
 * [NUT UI](roles/nut_ui/README.md)
 * [Monitor](roles/monitor/README.md)
+* [Deluge](roles/deluge/README.md)
 
 ---
 

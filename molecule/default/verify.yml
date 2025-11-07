@@ -6,4 +6,5 @@
     - certbot
     - nut_ui
     - monitor
+    - deluge
     - nginx
