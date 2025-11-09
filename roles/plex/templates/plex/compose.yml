@@ -1,0 +1,54 @@
+---
+services:
+  plex:
+    image: linuxserver/plex:{{ plex_version }}
+    container_name: {{ plex_container_name }}
+{% if plex_watchtower_enabled %}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: {{ plex_timezone }}
+      VERSION: public
+      PLEX_CLAIM: {{ plex_claim }}
+{% if plex_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in plex_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    volumes:
+      - "./library:/config"
+{% for volume in plex_volumes | default([]) %}
+      - {{ volume }}
+{% endfor %}
+{% if plex_networks %}
+    networks:
+{% for network in plex_networks %}
+      - {{ network }}
+{% endfor %}
+{% else %}
+    network_mode: "bridge"
+{% endif %}
+    ports:
+{% for port in plex_ports %}
+      - "{{ (plex_bind_ip ~ ':') if plex_bind_ip else '' }}{{ port }}"
+{% endfor %}
+    healthcheck:
+      test: ["CMD", "curl", "-sfo", "/dev/null", "http://localhost:{{ plex_server_port }}/identity"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+{% if plex_networks %}
+networks:
+{% for network in plex_networks %}
+  {{ network }}:
+    external: true
+{% endfor %}
+{% endif %}

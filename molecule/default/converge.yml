@@ -7,4 +7,5 @@
     - scalified.services.nut_ui
     - scalified.services.monitor
     - scalified.services.deluge
+    - scalified.services.plex
     - scalified.services.nginx

@@ -1,0 +1,50 @@
+---
+- name: Get Plex container info
+  community.docker.docker_container_info:
+    name: "{{ plex_container_name }}"
+  register: plex_container_info
+  when: plex_claim is not defined
+
+- name: Get Plex claim token
+  ansible.builtin.uri:
+    url: https://plex.tv/api/claim/token.json
+    method: GET
+    body_format: json
+    force: true
+    headers:
+      X-Plex-Client-Identifier: "{{ plex_client_identifier }}"
+      X-Plex-Token: "{{ plex_token }}"
+  register: plex_claim_response
+  until: "plex_claim_response.status == 200"
+  retries: 5
+  delay: 10
+  no_log: true
+  when:
+    - plex_claim is not defined
+    - not plex_container_info.exists
+
+- name: Set Plex claim fact
+  ansible.builtin.set_fact:
+    plex_claim: >-
+      {{ (plex_container_info.container.Config.Env
+          | select('search','^PLEX_CLAIM=')
+          | first
+          | split('=') | last)
+         if plex_container_info.exists
+         else plex_claim_response.json.token }}
+  no_log: true
+  when: plex_claim is not defined
+
+- name: Copy Plex templates
+  scalified.services.template:
+    src: "plex/"
+    dest: "{{ plex_dir }}/"
+    directory_mode: "{{ plex_dir_mode }}"
+    mode: "{{ plex_file_mode }}"
+    owner: "{{ plex_owner }}"
+    group: "{{ plex_group }}"
+
+- name: Start Plex
+  community.docker.docker_compose_v2:
+    project_src: "{{ plex_dir }}"
+    state: present

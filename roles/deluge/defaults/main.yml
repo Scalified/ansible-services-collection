@@ -15,8 +15,6 @@ deluge_deploy_resources_limits:
   memory: 4G
 deluge_volumes: []
 deluge_networks: []
-deluge_web_port: 8112
-deluge_client_port: 58846
 deluge_bind_ip: "{{ services_bind_ip }}"
 deluge_ports:
   - "{{ deluge_client_port }}:{{ deluge_client_port }}/tcp"

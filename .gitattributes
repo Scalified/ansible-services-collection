@@ -1,0 +1,4 @@
+**/files/**/*.png binary
+
+**/files/** text eol=lf
+**/templates/** text eol=lf

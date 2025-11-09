@@ -61,6 +61,7 @@ nginx_conf_roles:
   - scalified.services.nut_ui
   - scalified.services.monitor
   - scalified.services.deluge
+  - scalified.services.plex
 nginx_conf_files:
   - "{{ molecule_scenario_directory }}/roles/nginx/templates/htpasswd.conf"
 nginx_user: testadmin
@@ -69,3 +70,11 @@ nginx_password: testadminpassword
 # Deluge
 deluge_dir: "{{ services_dir }}/deluge"
 deluge_container_name: deluge
+
+# Plex
+plex_dir: "{{ services_dir }}/plex"
+plex_container_name: plex
+plex_claim: "claim-abcdefg1234567"
+plex_deploy_resources_limits:
+  cpus: "2.0"
+  memory: 2G
