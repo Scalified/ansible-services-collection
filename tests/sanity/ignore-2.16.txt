@@ -3,4 +3,5 @@ roles/certbot/templates/compose.yml yamllint!skip
 roles/nut_ui/templates/nut-ui/compose.yml yamllint!skip
 roles/monitor/templates/monitor/compose.yml yamllint!skip
 roles/deluge/templates/deluge/compose.yml yamllint!skip
+roles/plex/templates/plex/compose.yml yamllint!skip
 roles/nginx/templates/compose.yml yamllint!skip

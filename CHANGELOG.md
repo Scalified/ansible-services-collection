@@ -6,3 +6,4 @@
 [#7 NUT UI](https://github.com/Scalified/ansible-services-collection/issues/7)
 [#9 Monitor](https://github.com/Scalified/ansible-services-collection/issues/9)
 [#11 Deluge](https://github.com/Scalified/ansible-services-collection/issues/11)
+[#13 Plex](https://github.com/Scalified/ansible-services-collection/issues/13)
