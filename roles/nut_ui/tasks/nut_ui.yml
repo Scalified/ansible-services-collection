@@ -7,6 +7,7 @@
     mode: "{{ nut_ui_file_mode }}"
     owner: "{{ nut_ui_owner }}"
     group: "{{ nut_ui_group }}"
+  become: true
 
 - name: Start NUT UI
   community.docker.docker_compose_v2:

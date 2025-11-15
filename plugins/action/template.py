@@ -39,25 +39,20 @@ class ActionModule(ActionBase):
             display.vvv(f"Processing directory: {root}")
             display.vvv(f"Relative path: {rel_root}, Remote directory: {remote_dir}")
 
-            file_task = self._task.copy()
-            file_task.args = {
+            file_module_args = {
                 "path": remote_dir,
                 "state": "directory",
             }
             if directory_mode:
-                file_task.args["mode"] = directory_mode
+                file_module_args["mode"] = directory_mode
             if owner:
-                file_task.args["owner"] = owner
+                file_module_args["owner"] = owner
             if group:
-                file_task.args["group"] = group
+                file_module_args["group"] = group
 
             dir_res = self._execute_module(
                 module_name="ansible.builtin.file",
-                module_args={
-                    "path": remote_dir,
-                    "state": "directory",
-                    "mode": directory_mode,
-                },
+                module_args=file_module_args,
                 task_vars=task_vars
             )
 

@@ -14,34 +14,27 @@ Deploys **Monitor** service including **Grafana**, **Prometheus**, **cAdvisor**,
 
 ## Variables
 
-| Variable                                        | Description                                      | Default Value                       |
-|-------------------------------------------------|--------------------------------------------------|-------------------------------------|
-| `monitor_dir`                                   | Base directory for monitor deployment            | `{{ services_dir }}/monitor`        |
-| `monitor_owner`                                 | File owner                                       | `{{ services_owner }}`              |
-| `monitor_group`                                 | File group                                       | `{{ services_group }}`              |
-| `monitor_dir_mode`                              | Directory permissions                            | `{{ services_dir_mode }}`           |
-| `monitor_file_mode`                             | File permissions                                 | `{{ services_file_mode }}`          |
-| `monitor_grafana_version`                       | Grafana Docker image version                     | `latest`                            |
-| `monitor_grafana_container_name`                | Grafana container name                           | `monitor-grafana`                   |
-| `monitor_grafana_watchtower_enabled`            | Enable Watchtower auto-updates for Grafana       | `{{ services_watchtower_enabled }}` |
-| `monitor_grafana_user`                          | Grafana admin username                           | `admin`                             |
-| `monitor_grafana_password`                      | Grafana admin password                           | `admin`                             |
-| `monitor_grafana_slack_webhook_url`             | Slack webhook URL for Grafana alerts             | `""`                                |
-| `monitor_grafana_deploy_resources_limits`       | Grafana container resource limits                | `{cpus: "0.50", memory: 1G}`        |
-| `monitor_grafana_networks`                      | Additional Docker networks for Grafana           | `[]`                                |
-| `monitor_prometheus_version`                    | Prometheus Docker image version                  | `latest`                            |
-| `monitor_prometheus_container_name`             | Prometheus container name                        | `monitor-prometheus`                |
-| `monitor_prometheus_watchtower_enabled`         | Enable Watchtower auto-updates for Prometheus    | `{{ services_watchtower_enabled }}` |
-| `monitor_prometheus_deploy_resources_limits`    | Prometheus container resource limits             | `{cpus: "0.50", memory: 500M}`      |
-| `monitor_prometheus_networks`                   | Additional Docker networks for Prometheus        | `[]`                                |
-| `monitor_cadvisor_version`                      | cAdvisor Docker image version                    | `latest`                            |
-| `monitor_cadvisor_container_name`               | cAdvisor container name                          | `monitor-cadvisor`                  |
-| `monitor_cadvisor_watchtower_enabled`           | Enable Watchtower auto-updates for cAdvisor      | `{{ services_watchtower_enabled }}` |
-| `monitor_cadvisor_deploy_resources_limits`      | cAdvisor container resource limits               | `{cpus: "0.50", memory: 128M}`      |
-| `monitor_node_exporter_version`                 | Node Exporter Docker image version               | `latest`                            |
-| `monitor_node_exporter_container_name`          | Node Exporter container name                     | `monitor-node-exporter`             |
-| `monitor_node_exporter_watchtower_enabled`      | Enable Watchtower auto-updates for Node Exporter | `{{ services_watchtower_enabled }}` |
-| `monitor_node_exporter_deploy_resources_limits` | Node Exporter container resource limits          | `{cpus: "0.50", memory: 128M}`      |
+| Variable                                        | Description                                       | Default Value                               |
+|-------------------------------------------------|---------------------------------------------------|---------------------------------------------|
+| `monitor_dir`                                   | Base directory for monitor deployment             | `{{ services_dir }}/monitor`                |
+| `monitor_owner`                                 | File owner                                        | `{{ services_owner }}`                      |
+| `monitor_group`                                 | File group                                        | `{{ services_group }}`                      |
+| `monitor_dir_mode`                              | Directory permissions                             | `{{ services_dir_mode }}`                   |
+| `monitor_file_mode`                             | File permissions                                  | `{{ services_file_mode }}`                  |
+| `monitor_grafana_container_name`                | Grafana container name                            | `monitor-grafana`                           |
+| `monitor_grafana_user`                          | Grafana admin username                            | `admin`                                     |
+| `monitor_grafana_password`                      | Grafana admin password                            | `admin`                                     |
+| `monitor_grafana_slack_webhook_url`             | Slack webhook URL for Grafana alerts              | `""`                                        |
+| `monitor_grafana_deploy_resources_limits`       | Grafana container resource limits                 | `{cpus: "0.50", memory: 1G}`                |
+| `monitor_grafana_networks`                      | Additional Docker networks for Grafana            | `[]`                                        |
+| `monitor_prometheus_container_name`             | Prometheus container name                         | `monitor-prometheus`                        |
+| `monitor_prometheus_deploy_resources_limits`    | Prometheus container resource limits              | `{cpus: "0.50", memory: 500M}`              |
+| `monitor_prometheus_networks`                   | Additional Docker networks for Prometheus         | `[]`                                        |
+| `monitor_cadvisor_container_name`               | cAdvisor container name                           | `monitor-cadvisor`                          |
+| `monitor_cadvisor_deploy_resources_limits`      | cAdvisor container resource limits                | `{cpus: "0.50", memory: 128M}`              |
+| `monitor_node_exporter_container_name`          | Node Exporter container name                      | `monitor-node-exporter`                     |
+| `monitor_node_exporter_deploy_resources_limits` | Node Exporter container resource limits           | `{cpus: "0.50", memory: 128M}`              |
+| `monitor_nginx_server_name`                     | Nginx server name for reverse proxy configuration | `{{ monitor_container_name }}.{{ domain }}` |
 
 ## Pre-configured Dashboards
 

@@ -33,6 +33,7 @@ Deploys [Deluge](https://deluge-torrent.org/) - a lightweight, Free Software, cr
 | `deluge_client_port`             | Deluge client port                                | `58846`                                                     |
 | `deluge_bind_ip`                 | Bind IP address for port mapping                  | `{{ services_bind_ip }}`                                    |
 | `deluge_ports`                   | Port mappings for Deluge                          | `["{{ deluge_client_port }}:{{ deluge_client_port }}/tcp"]` |
+| `deluge_nginx_server_name`       | Nginx server name for reverse proxy configuration | `{{ deluge_container_name }}.{{ domain }}`                  |
 
 ## Networks
 

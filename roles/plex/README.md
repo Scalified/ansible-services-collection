@@ -14,22 +14,23 @@ Deploys [Plex Media Server](https://www.plex.tv/) - a service for media organiza
 
 ## Variables
 
-| Variable                       | Description                                       | Default Value                       |
-|--------------------------------|---------------------------------------------------|-------------------------------------|
-| `plex_dir`                     | Base directory for Plex installation              | `{{ services_dir }}/plex`           |
-| `plex_owner`                   | Owner for Plex files and directories              | `{{ services_owner }}`              |
-| `plex_group`                   | Group for Plex files and directories              | `{{ services_group }}`              |
-| `plex_dir_mode`                | Permissions for Plex directories                  | `{{ services_dir_mode }}`           |
-| `plex_file_mode`               | Permissions for Plex files                        | `{{ services_file_mode }}`          |
-| `plex_version`                 | Plex Docker image version                         | `latest`                            |
-| `plex_container_name`          | Plex Docker container name                        | `plex`                              |
-| `plex_watchtower_enabled`      | Enable Watchtower for automatic container updates | `{{ services_watchtower_enabled }}` |
-| `plex_timezone`                | Timezone for Plex container                       | `{{ services_timezone }}`           |
-| `plex_deploy_resources_limits` | Resource limits for Plex container                | `{"cpus": "3.0", "memory": "4G"}`   |
-| `plex_volumes`                 | Additional volumes to mount                       | `[]`                                |
-| `plex_networks`                | Custom Docker networks to connect to              | `[]`                                |
-| `plex_bind_ip`                 | Bind IP address for port mapping                  | `{{ services_bind_ip }}`            |
-| `plex_ports`                   | Port mappings for Plex                            | See [Ports](#ports) section         |
+| Variable                       | Description                                       | Default Value                            |
+|--------------------------------|---------------------------------------------------|------------------------------------------|
+| `plex_dir`                     | Base directory for Plex installation              | `{{ services_dir }}/plex`                |
+| `plex_owner`                   | Owner for Plex files and directories              | `{{ services_owner }}`                   |
+| `plex_group`                   | Group for Plex files and directories              | `{{ services_group }}`                   |
+| `plex_dir_mode`                | Permissions for Plex directories                  | `{{ services_dir_mode }}`                |
+| `plex_file_mode`               | Permissions for Plex files                        | `{{ services_file_mode }}`               |
+| `plex_version`                 | Plex Docker image version                         | `latest`                                 |
+| `plex_container_name`          | Plex Docker container name                        | `plex`                                   |
+| `plex_watchtower_enabled`      | Enable Watchtower for automatic container updates | `{{ services_watchtower_enabled }}`      |
+| `plex_timezone`                | Timezone for Plex container                       | `{{ services_timezone }}`                |
+| `plex_deploy_resources_limits` | Resource limits for Plex container                | `{"cpus": "2.0", "memory": "4G"}`        |
+| `plex_volumes`                 | Additional volumes to mount                       | `[]`                                     |
+| `plex_networks`                | Custom Docker networks to connect to              | `[]`                                     |
+| `plex_bind_ip`                 | Bind IP address for port mapping                  | `{{ services_bind_ip }}`                 |
+| `plex_ports`                   | Port mappings for Plex                            | See [Ports](#ports) section              |
+| `plex_nginx_server_name`       | Nginx server name for reverse proxy configuration | `{{ plex_container_name }}.{{ domain }}` |
 
 ## Networks
 

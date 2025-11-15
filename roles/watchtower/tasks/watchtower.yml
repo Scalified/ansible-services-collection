@@ -7,6 +7,7 @@
     mode: "{{ watchtower_file_mode }}"
     owner: "{{ watchtower_owner }}"
     group: "{{ watchtower_group }}"
+  become: true
 
 - name: Start Watchtower
   community.docker.docker_compose_v2:

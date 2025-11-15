@@ -1,34 +1,4 @@
 services:
-  nut-cgi:
-    image: scalified/nut-cgi:{{ nut_ui_cgi_version }}
-    container_name: {{ nut_ui_cgi_container_name }}
-{% if nut_ui_cgi_watchtower_enabled %}
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-{% endif %}
-    environment:
-      - "ADMIN_EMAIL={{ nut_ui_cgi_admin_email }}"
-      - "MONITOR_HOSTS={{ nut_ui_cgi_monitor_hosts }}"
-{% if nut_ui_cgi_deploy_resources_limits %}
-    deploy:
-      resources:
-        limits:
-{% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
-          {{ key }}: "{{ value }}"
-{% endfor %}
-{% endif %}
-    networks:
-      - nut-ui
-{% for network in nut_ui_networks | default([]) %}
-      - {{ network }}
-{% endfor %}
-    healthcheck:
-      test: ["CMD", "curl", "-sfo", "/dev/null", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
-    restart: always
-
   nut-ui:
     image: ghcr.io/superioone/nut_webgui:{{ nut_ui_version }}
     container_name: {{ nut_ui_container_name }}
@@ -54,8 +24,42 @@ services:
 {% for network in nut_ui_networks | default([]) %}
       - {{ network }}
 {% endfor %}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:9000/probes/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: always
+
+  nut-cgi:
+    image: scalified/nut-cgi:{{ nut_ui_cgi_version }}
+    container_name: {{ nut_ui_cgi_container_name }}
+{% if nut_ui_cgi_watchtower_enabled %}
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+{% endif %}
+    environment:
+      - "ADMIN_EMAIL={{ nut_ui_cgi_admin_email }}"
+      - "MONITOR_HOSTS={{ nut_ui_cgi_monitor_hosts }}"
+{% if nut_ui_cgi_deploy_resources_limits %}
+    deploy:
+      resources:
+        limits:
+{% for key, value in nut_ui_cgi_deploy_resources_limits.items() %}
+          {{ key }}: "{{ value }}"
+{% endfor %}
+{% endif %}
+    networks:
+      - nut-ui
+{% for network in nut_ui_networks | default([]) %}
+      - {{ network }}
+{% endfor %}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-sfo", "/dev/null", "http://localhost:8080/health"]
       interval: 30s
       timeout: 5s
       retries: 3
@@ -84,6 +88,8 @@ services:
 {% endif %}
     networks:
       - nut-ui
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: always
 
 networks:

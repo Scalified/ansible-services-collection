@@ -5,19 +5,10 @@ nut_ui_group: "{{ services_group }}"
 nut_ui_dir_mode: "{{ services_dir_mode }}"
 nut_ui_file_mode: "{{ services_file_mode }}"
 
-nut_ui_cgi_version: latest
-nut_ui_cgi_container_name: nut-ui-cgi
-nut_ui_cgi_watchtower_enabled: "{{ services_watchtower_enabled }}"
-nut_ui_cgi_admin_email: "{{ services_email }}"
-nut_ui_cgi_monitor_hosts: "{{ nut_ups_name | upper }}:{{ nut_ups_name }}@{{ ansible_hostname }}:{{ nut_upsd_listen_port }}"
-nut_ui_cgi_deploy_resources_limits:
-  cpus: "0.50"
-  memory: 500M
-
 nut_ui_version: latest
 nut_ui_container_name: nut-ui
 nut_ui_watchtower_enabled: "{{ services_watchtower_enabled }}"
-nut_ui_upsd_address: "{{ ansible_hostname }}"
+nut_ui_upsd_address: "host.docker.internal"
 nut_ui_upsd_port: "{{ nut_upsd_listen_port }}"
 nut_ui_upsd_user: "{{ nut_users_admin_name }}"
 nut_ui_upsd_password: "{{ nut_users_admin_password }}"
@@ -25,9 +16,18 @@ nut_ui_deploy_resources_limits:
   cpus: "0.50"
   memory: 500M
 
+nut_ui_cgi_version: latest
+nut_ui_cgi_container_name: nut-cgi
+nut_ui_cgi_watchtower_enabled: "{{ services_watchtower_enabled }}"
+nut_ui_cgi_admin_email: "{{ services_email }}"
+nut_ui_cgi_monitor_hosts: "{{ nut_ups_name | upper }}:{{ nut_ups_name }}@host.docker.internal:{{ nut_upsd_listen_port }}"
+nut_ui_cgi_deploy_resources_limits:
+  cpus: "0.50"
+  memory: 500M
+
 nut_ui_exporter_version: latest
 nut_ui_exporter_container_name: nut-exporter
-nut_ui_exporter_server: "{{ ansible_hostname }}"
+nut_ui_exporter_server: "host.docker.internal"
 nut_ui_exporter_port: "{{ nut_upsd_listen_port }}"
 nut_ui_exporter_username: "{{ nut_users_monitor_name }}"
 nut_ui_exporter_password: "{{ nut_users_monitor_password }}"
@@ -35,17 +35,8 @@ nut_ui_exporter_variables:
   - battery.charge
   - battery.charge.low
   - battery.runtime
-  - battery.voltage
-  - battery.voltage.nominal
-  - input.frequency
-  - input.transfer.high
-  - input.transfer.low
   - input.voltage
-  - input.voltage.nominal
-  - output.frequency
-  - output.frequency.nominal
   - output.voltage
-  - output.voltage.nominal
   - ups.beeper.status
   - ups.load
   - ups.power
@@ -54,3 +45,5 @@ nut_ui_exporter_variables:
 nut_ui_exporter_deploy_resources_limits:
   cpus: "0.50"
   memory: 500M
+
+nut_ui_nginx_server_name: "nut.{{ domain }}"

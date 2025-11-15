@@ -101,6 +101,26 @@ server {
 }
 ```
 
+## Betterlisting
+
+The **betterlisting** feature styles Nginx directory and file listings using HTML templates, CSS, and icons
+
+**Betterlisting** can be configured as follows:
+
+```nginx
+location /betterlisting/ {
+    root /;
+}
+
+location / {
+    root /vault/;
+    try_files $uri $uri/ =404;
+
+    add_before_body /betterlisting/top.html;
+    add_after_body  /betterlisting/bot.html;
+}
+```
+
 ## Configuration Files from Roles
 
 Nginx configuration files from other roles can be included by listing the role names in the `nginx_conf_roles` variable:
@@ -120,4 +140,13 @@ Nginx configuration templates can be included by listing their paths in the `ngi
 ```yaml
 nginx_conf_files:
   - templates/appserver.conf
+```
+
+## Certbot SSL Certificates
+
+Certbot SSL certificates can be configured as follows:
+
+```yaml
+nginx_ssl_keys_server_path: "/etc/letsencrypt/live/{{ domain }}/privkey.pem"
+nginx_ssl_certs_server_path: "/etc/letsencrypt/live/{{ domain }}/fullchain.pem"
 ```

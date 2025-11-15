@@ -1,18 +1,15 @@
 ---
 services:
   grafana:
-    image: grafana/grafana:{{ monitor_grafana_version }}
+    image: grafana/grafana:12.2
     container_name: {{ monitor_grafana_container_name }}
     labels:
-{% if monitor_grafana_watchtower_enabled %}
-      com.centurylinklabs.watchtower.enable: "true"
-{% endif %}
       org.label-schema.group: "monitor"
     environment:
       - 'GF_SECURITY_ADMIN_USER={{ monitor_grafana_user }}'
       - 'GF_SECURITY_ADMIN_PASSWORD={{ monitor_grafana_password }}'
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_SERVER_ROOT_URL=https://monitor.{{ domain }}
+      - GF_SERVER_ROOT_URL={{ monitor_grafana_server_root_url }}
 {% if monitor_grafana_slack_webhook_url %}
       - SLACK_WEBHOOK_URL={{ monitor_grafana_slack_webhook_url }}
 {% endif %}
@@ -41,13 +38,10 @@ services:
     restart: always
 
   prometheus:
-    image: prom/prometheus:{{ monitor_prometheus_version }}
+    image: prom/prometheus:v3.7.3
     container_name: {{ monitor_prometheus_container_name }}
     user: root
     labels:
-{% if monitor_prometheus_watchtower_enabled %}
-      com.centurylinklabs.watchtower.enable: "true"
-{% endif %}
       org.label-schema.group: "monitor"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -79,12 +73,9 @@ services:
     restart: always
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:{{ monitor_cadvisor_version }}
+    image: ghcr.io/google/cadvisor:v0.53.0
     container_name: {{ monitor_cadvisor_container_name }}
     labels:
-{% if monitor_cadvisor_watchtower_enabled %}
-      com.centurylinklabs.watchtower.enable: "true"
-{% endif %}
       org.label-schema.group: "monitor"
     command: -logtostderr -docker_only
 {% if monitor_cadvisor_deploy_resources_limits %}
@@ -106,12 +97,9 @@ services:
     restart: always
 
   node-exporter:
-    image: prom/node-exporter:{{ monitor_node_exporter_version }}
+    image: prom/node-exporter:v1.10.2
     container_name: {{ monitor_node_exporter_container_name }}
     labels:
-{% if monitor_node_exporter_watchtower_enabled %}
-      com.centurylinklabs.watchtower.enable: "true"
-{% endif %}
       org.label-schema.group: "monitor"
     command:
       - '--path.sysfs=/host/sys'

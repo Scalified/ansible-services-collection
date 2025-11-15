@@ -99,13 +99,13 @@ groups:
               maxDataPoints: 43200
               refId: B
               type: threshold
-        dashboardUid: eedf38onmj4lca
+        dashboardUid: shmz9zb
         panelId: 15
         noDataState: NoData
         execErrState: Error
         for: 30s
         annotations:
-          __dashboardUid__: eedf38onmj4lca
+          __dashboardUid__: shmz9zb
           __panelId__: "15"
           description: UPS load is at {{ humanizePercentage $values.A.Value }}
           summary: High UPS load
@@ -155,13 +155,13 @@ groups:
               maxDataPoints: 43200
               refId: B
               type: threshold
-        dashboardUid: eedf38onmj4lca
+        dashboardUid: shmz9zb
         panelId: 47
         noDataState: NoData
         execErrState: Error
         for: 30s
         annotations:
-          __dashboardUid__: eedf38onmj4lca
+          __dashboardUid__: shmz9zb
           __panelId__: "47"
           description: UPS power is at {{ humanizePercentage $values.A.Value }}
           summary: High UPS power
@@ -211,12 +211,12 @@ groups:
               maxDataPoints: 43200
               refId: B
               type: threshold
-        dashboardUid: eedf38onmj4lca
+        dashboardUid: shmz9zb
         panelId: 45
         noDataState: NoData
         execErrState: Error
         annotations:
-          __dashboardUid__: eedf38onmj4lca
+          __dashboardUid__: shmz9zb
           __panelId__: "45"
           description: UPS battery charge is only {{ humanizePercentage $values.A.Value }} higher than battery charge low
           summary: Low UPS Battery charge
@@ -266,13 +266,13 @@ groups:
               maxDataPoints: 43200
               refId: B
               type: threshold
-        dashboardUid: eedf38onmj4lca
+        dashboardUid: shmz9zb
         panelId: 36
         noDataState: NoData
         execErrState: Error
         for: 30s
         annotations:
-          __dashboardUid__: eedf38onmj4lca
+          __dashboardUid__: shmz9zb
           __panelId__: "36"
           description: "UPS input voltage is: {{ $values.A.Value }}V"
           summary: High UPS Input Voltage
@@ -323,13 +323,13 @@ groups:
               maxDataPoints: 43200
               refId: B
               type: threshold
-        dashboardUid: eedf38onmj4lca
+        dashboardUid: shmz9zb
         panelId: 41
         noDataState: NoData
         execErrState: Error
         for: 30s
         annotations:
-          __dashboardUid__: eedf38onmj4lca
+          __dashboardUid__: shmz9zb
           __panelId__: "41"
           description: "UPS output voltage is: {{ $values.A.Value }}V"
           summary: UPS Output Voltage Outside Range

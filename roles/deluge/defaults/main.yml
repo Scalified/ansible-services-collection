@@ -18,3 +18,5 @@ deluge_networks: []
 deluge_bind_ip: "{{ services_bind_ip }}"
 deluge_ports:
   - "{{ deluge_client_port }}:{{ deluge_client_port }}/tcp"
+
+deluge_nginx_server_name: "{{ deluge_container_name }}.{{ domain }}"

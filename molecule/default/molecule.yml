@@ -8,6 +8,8 @@ platforms:
     image: scalified/dind
     privileged: true
     cgroupns_mode: host
+    volumes:
+      - /home/runner/dind:/var/lib/docker
 provisioner:
   name: ansible
 verifier:

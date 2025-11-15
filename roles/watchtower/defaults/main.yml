@@ -17,6 +17,7 @@ watchtower_include_restarting: false
 watchtower_include_stopped: false
 watchtower_revive_stopped: false
 watchtower_label_enable: true
+watchtower_poll_interval: 86400
 watchtower_disable_containers: ""
 watchtower_monitor_only: false
 watchtower_label_take_precedence: false

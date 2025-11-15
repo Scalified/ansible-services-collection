@@ -21,6 +21,7 @@ services:
       - ./nginx/snippets:/etc/nginx/snippets:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/.htpasswd:/etc/nginx/.htpasswd:ro
+      - ./nginx/betterlisting:/etc/nginx/betterlisting:ro
       - {{ nginx_ssl_certs_server_path }}:/etc/nginx/ssl/server.crt:ro
       - {{ nginx_ssl_keys_server_path }}:/etc/nginx/ssl/server.key:ro
 {% for volume in nginx_volumes | default([]) %}

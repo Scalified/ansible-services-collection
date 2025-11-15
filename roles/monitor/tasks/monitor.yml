@@ -7,6 +7,7 @@
     mode: "{{ monitor_file_mode }}"
     owner: "{{ monitor_owner }}"
     group: "{{ monitor_group }}"
+  become: true
 
 - name: Copy Monitor files
   ansible.builtin.copy:
@@ -16,6 +17,7 @@
     mode: "{{ monitor_file_mode }}"
     owner: "{{ monitor_owner }}"
     group: "{{ monitor_group }}"
+  become: true
 
 - name: Copy Monitor role configuration files
   ansible.builtin.copy:
@@ -25,6 +27,7 @@
     mode: "{{ monitor_file_mode }}"
     owner: "{{ monitor_owner }}"
     group: "{{ monitor_group }}"
+  become: true
   loop: "{{ monitor_conf_roles }}"
   loop_control:
     loop_var: monitor_conf_role
@@ -38,6 +41,7 @@
     mode: "{{ monitor_file_mode }}"
     owner: "{{ monitor_owner }}"
     group: "{{ monitor_group }}"
+  become: true
   loop: "{{ monitor_conf_roles }}"
   loop_control:
     loop_var: monitor_conf_role

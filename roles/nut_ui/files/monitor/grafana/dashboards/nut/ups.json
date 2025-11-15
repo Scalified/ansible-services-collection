@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 8,
+  "id": 7,
   "links": [],
   "panels": [
     {
@@ -63,7 +63,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -83,8 +83,8 @@
         ]
       },
       "gridPos": {
-        "h": 4,
-        "w": 4,
+        "h": 3,
+        "w": 5,
         "x": 0,
         "y": 1
       },
@@ -106,7 +106,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -124,364 +124,6 @@
       "title": "Model",
       "transparent": true,
       "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Indicates the approximate maximum load the UPS is designed to support under normal conditions",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "voltamp"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 1
-      },
-      "id": 34,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_ups_power_nominal{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Nominal Power",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Indicates the standard operating frequency of the UPS when supplying power to connected devices",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "rothz"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 1
-      },
-      "id": 42,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_output_frequency_nominal{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Nominal Output Frequency",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Standard voltage that the UPS is designed to provide to connected devices when running on battery power or through its inverter",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "volt"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 12,
-        "y": 1
-      },
-      "id": 43,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_output_voltage_nominal{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Nominal Output Voltage",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "When the input voltage drops below this value, the UPS will switch to battery mode to protect connected equipment from undervoltage conditions",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "volt"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 1
-      },
-      "id": 37,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_input_transfer_low{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Low voltage transfer point",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "When the input voltage rises above this value, the UPS will switch to battery mode to protect against overvoltage conditions",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "volt"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "id": 38,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_input_transfer_high{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "High voltage transfer point",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 5
-      },
-      "id": 44,
-      "panels": [],
-      "title": "Status",
-      "type": "row"
     },
     {
       "datasource": {
@@ -511,7 +153,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -580,10 +222,10 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 0,
-        "y": 6
+        "h": 3,
+        "w": 5,
+        "x": 5,
+        "y": 1
       },
       "id": 26,
       "options": {
@@ -603,7 +245,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -637,6 +279,79 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bool_on_off"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 10,
+        "y": 1
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "network_ups_tools_ups_beeper_status{ups=\"$ups\"}",
+          "instant": false,
+          "legendFormat": "{{ups}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Beeper",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
           "max": 100,
           "min": 0,
           "thresholds": {
@@ -644,7 +359,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -665,10 +380,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 6,
-        "x": 6,
-        "y": 6
+        "x": 12,
+        "y": 1
       },
       "id": 32,
       "options": {
@@ -686,7 +401,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -715,6 +430,85 @@
           "color": {
             "mode": "thresholds"
           },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 30
+              },
+              {
+                "color": "yellow",
+                "value": 60
+              },
+              {
+                "color": "green",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 2,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "network_ups_tools_battery_charge{ups=\"$ups\"}",
+          "instant": false,
+          "legendFormat": "{{ups}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Battery Charge",
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
@@ -722,7 +516,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -731,10 +525,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
-        "x": 12,
-        "y": 6
+        "x": 0,
+        "y": 4
       },
       "id": 33,
       "options": {
@@ -754,7 +548,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -778,38 +572,42 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Estimated remaining runtime of the UPS based on the current load and battery charge level",
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
           "mappings": [],
-          "max": 1,
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
+                "color": "red",
+                "value": 0
+              },
+              {
                 "color": "orange",
-                "value": null
+                "value": 600
+              },
+              {
+                "color": "yellow",
+                "value": 1200
               },
               {
                 "color": "green",
-                "value": 0
+                "value": 3600
               }
             ]
           },
-          "unit": "bool_on_off"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 3,
         "w": 6,
-        "x": 18,
-        "y": 6
+        "x": 6,
+        "y": 4
       },
-      "id": 30,
+      "id": 24,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -818,16 +616,16 @@
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "showPercentChange": false,
-        "textMode": "auto",
+        "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -835,16 +633,29 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "network_ups_tools_ups_beeper_status{ups=\"$ups\"}",
+          "expr": "network_ups_tools_battery_runtime{ups=\"$ups\"}",
           "instant": false,
           "legendFormat": "{{ups}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Beeper",
+      "title": "Battery Runtime",
       "transparent": true,
       "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 44,
+      "panels": [],
+      "title": "Status",
+      "type": "row"
     },
     {
       "datasource": {
@@ -883,6 +694,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -900,7 +712,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -924,7 +736,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 9
       },
       "id": 15,
       "options": {
@@ -943,7 +755,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -971,7 +783,8 @@
         "defaults": {
           "color": {
             "fixedColor": "green",
-            "mode": "fixed"
+            "mode": "continuous-GrYlRd",
+            "seriesBy": "last"
           },
           "custom": {
             "axisBorderShow": false,
@@ -1000,6 +813,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1009,6 +823,7 @@
               "mode": "off"
             }
           },
+          "fieldMinMax": false,
           "mappings": [],
           "min": 0,
           "thresholds": {
@@ -1016,19 +831,49 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
           "unit": "voltamp"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "eaton nominal power"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "eaton power"
+            },
+            "properties": []
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 9
       },
       "id": 47,
       "options": {
@@ -1047,7 +892,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -1057,12 +902,56 @@
           "editorMode": "code",
           "expr": "network_ups_tools_ups_power{ups=\"$ups\"}",
           "instant": false,
-          "legendFormat": "{{ups}}",
+          "legendFormat": "{{ups}} power",
           "range": true,
-          "refId": "A"
+          "refId": "Power"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "network_ups_tools_ups_power_nominal{ups=\"$ups\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{ups}} nominal power",
+          "range": true,
+          "refId": "Nominal Power"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "Nominal Power",
+          "hide": false,
+          "reducer": "last",
+          "refId": "Nominal Power Reduce",
+          "type": "reduce"
         }
       ],
       "title": "Power",
+      "transformations": [
+        {
+          "id": "configFromData",
+          "options": {
+            "applyTo": {
+              "id": "byName",
+              "options": "Nominal Power Reduce"
+            },
+            "configRefId": "Nominal Power Reduce",
+            "mappings": [
+              {
+                "fieldName": "Nominal Power Reduce {instance=\"nut-exporter:9199\", job=\"nut-primary\", ups=\"eaton\"}",
+                "handlerKey": "max"
+              }
+            ]
+          }
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     },
@@ -1072,91 +961,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 17
       },
       "id": 46,
       "panels": [],
       "title": "Battery",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 30
-              },
-              {
-                "color": "yellow",
-                "value": 60
-              },
-              {
-                "color": "green",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 0,
-        "y": 20
-      },
-      "id": 2,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_battery_charge{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Battery Charge",
-      "transparent": true,
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -1193,6 +1003,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1210,7 +1021,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "orange",
@@ -1247,10 +1058,10 @@
         ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 20,
-        "x": 4,
-        "y": 20
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
       },
       "id": 45,
       "options": {
@@ -1266,7 +1077,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -1306,83 +1117,6 @@
       "description": "Estimated remaining runtime of the UPS based on the current load and battery charge level",
       "fieldConfig": {
         "defaults": {
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 600
-              },
-              {
-                "color": "yellow",
-                "value": 1200
-              },
-              {
-                "color": "green",
-                "value": 3600
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 0,
-        "y": 26
-      },
-      "id": 24,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "value",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_battery_runtime{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Battery Runtime",
-      "transparent": true,
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Estimated remaining runtime of the UPS based on the current load and battery charge level",
-      "fieldConfig": {
-        "defaults": {
           "color": {
             "mode": "palette-classic"
           },
@@ -1410,6 +1144,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1425,7 +1160,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "orange",
@@ -1446,10 +1181,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 20,
-        "x": 4,
-        "y": 26
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
       },
       "id": 48,
       "options": {
@@ -1465,7 +1200,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -1490,93 +1225,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 26
       },
       "id": 35,
       "panels": [],
-      "title": "Input",
+      "title": "Voltage",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Current frequency of the incoming AC power from the mains",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "max": 80,
-          "min": 40,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 46
-              },
-              {
-                "color": "green",
-                "value": 50
-              },
-              {
-                "color": "orange",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 70
-              }
-            ]
-          },
-          "unit": "rothz"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 33
-      },
-      "id": 5,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_input_frequency{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Frequency",
-      "transparent": true,
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -1613,6 +1267,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1630,7 +1285,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "orange",
@@ -1655,10 +1310,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 20,
-        "x": 4,
-        "y": 33
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 27
       },
       "id": 36,
       "options": {
@@ -1674,7 +1329,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -1689,103 +1344,9 @@
           "refId": "A"
         }
       ],
-      "title": "Voltage",
+      "title": "Input Voltage",
       "transparent": true,
       "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 40
-      },
-      "id": 39,
-      "panels": [],
-      "title": "Output",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Current output frequency",
-      "fieldConfig": {
-        "defaults": {
-          "mappings": [],
-          "max": 80,
-          "min": 40,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 49
-              },
-              {
-                "color": "green",
-                "value": 50
-              },
-              {
-                "color": "orange",
-                "value": 60
-              },
-              {
-                "color": "red",
-                "value": 61
-              }
-            ]
-          },
-          "unit": "rothz"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 0,
-        "y": 41
-      },
-      "id": 40,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.5.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "network_ups_tools_output_frequency{ups=\"$ups\"}",
-          "instant": false,
-          "legendFormat": "{{ups}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Frequency",
-      "transparent": true,
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -1822,6 +1383,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1839,7 +1401,7 @@
             "steps": [
               {
                 "color": "red",
-                "value": null
+                "value": 0
               },
               {
                 "color": "orange",
@@ -1864,10 +1426,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 20,
-        "x": 4,
-        "y": 41
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 27
       },
       "id": 41,
       "options": {
@@ -1883,7 +1445,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.1",
+      "pluginVersion": "12.2.1",
       "targets": [
         {
           "datasource": {
@@ -1898,14 +1460,14 @@
           "refId": "A"
         }
       ],
-      "title": "Voltage",
+      "title": "Output Voltage",
       "transparent": true,
       "type": "timeseries"
     }
   ],
   "preload": false,
   "refresh": "10s",
-  "schemaVersion": 40,
+  "schemaVersion": 42,
   "tags": [
     "nut"
   ],
@@ -1936,7 +1498,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "UPS",
-  "uid": "eedf38onmj4lca",
-  "version": 96,
-  "weekStart": ""
+  "uid": "shmz9zb",
+  "version": 1
 }

@@ -7,6 +7,7 @@
     mode: "{{ deluge_file_mode }}"
     owner: "{{ deluge_owner }}"
     group: "{{ deluge_group }}"
+  become: true
 
 - name: Start Deluge
   community.docker.docker_compose_v2:

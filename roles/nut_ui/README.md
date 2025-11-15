@@ -18,36 +18,37 @@ Deploys **NUT (Network UPS Tools)** UI services for monitoring UPS devices:
 
 ## Variables
 
-| Variable                                  | Description                               | Default Value                                                                                      |
-|-------------------------------------------|-------------------------------------------|----------------------------------------------------------------------------------------------------|
-| `nut_ui_dir`                              | Base directory for NUT UI deployment      | `{{ services_dir }}/nut-ui`                                                                        |
-| `nut_ui_owner`                            | File owner                                | `{{ services_owner }}`                                                                             |
-| `nut_ui_group`                            | File group                                | `{{ services_group }}`                                                                             |
-| `nut_ui_dir_mode`                         | Directory permissions                     | `{{ services_dir_mode }}`                                                                          |
-| `nut_ui_file_mode`                        | File permissions                          | `{{ services_file_mode }}`                                                                         |
-| `nut_ui_cgi_version`                      | NUT CGI Docker image version              | `latest`                                                                                           |
-| `nut_ui_cgi_container_name`               | Docker container name for CGI service     | `nut-ui-cgi`                                                                                       |
-| `nut_ui_cgi_watchtower_enabled`           | Enable Watchtower auto-updates            | `{{ services_watchtower_enabled }}`                                                                |
-| `nut_ui_cgi_admin_email`                  | Administrator email for CGI interface     | `{{ services_email }}`                                                                             |
-| `nut_ui_cgi_monitor_hosts`                | UPS hosts to monitor                      | `{{ nut_ups_name \| upper }}:{{ nut_ups_name }}@{{ ansible_hostname }}:{{ nut_upsd_listen_port }}` |
-| `nut_ui_cgi_deploy_resources_limits`      | Container resource limits for CGI service | `{cpus: "0.50", memory: 500M}`                                                                     |
-| `nut_ui_version`                          | NUT Web UI Docker image version           | `latest`                                                                                           |
-| `nut_ui_container_name`                   | Docker container name for Web UI          | `nut-ui`                                                                                           |
-| `nut_ui_watchtower_enabled`               | Enable Watchtower auto-updates            | `{{ services_watchtower_enabled }}`                                                                |
-| `nut_ui_upsd_address`                     | UPS daemon server address                 | `{{ ansible_hostname }}`                                                                           |
-| `nut_ui_upsd_port`                        | UPS daemon server port                    | `{{ nut_upsd_listen_port }}`                                                                       |
-| `nut_ui_upsd_user`                        | UPS daemon username                       | `{{ nut_users_admin_name }}`                                                                       |
-| `nut_ui_upsd_password`                    | UPS daemon password                       | `{{ nut_users_admin_password }}`                                                                   |
-| `nut_ui_deploy_resources_limits`          | Container resource limits for Web UI      | `{cpus: "0.50", memory: 500M}`                                                                     |
-| `nut_ui_exporter_version`                 | NUT Exporter Docker image version         | `latest`                                                                                           |
-| `nut_ui_exporter_container_name`          | Docker container name for exporter        | `nut-exporter`                                                                                     |
-| `nut_ui_exporter_server`                  | NUT server address for exporter           | `{{ ansible_hostname }}`                                                                           |
-| `nut_ui_exporter_port`                    | NUT server port for exporter              | `{{ nut_upsd_listen_port }}`                                                                       |
-| `nut_ui_exporter_username`                | NUT server username for exporter          | `{{ nut_users_monitor_name }}`                                                                     |
-| `nut_ui_exporter_password`                | NUT server password for exporter          | `{{ nut_users_monitor_password }}`                                                                 |
-| `nut_ui_exporter_variables`               | List of UPS variables to export           | See [NUT Exporter Variables](#nut-exporter-variables)                                              |
-| `nut_ui_exporter_deploy_resources_limits` | Container resource limits for exporter    | `{cpus: "0.50", memory: 500M}`                                                                     |
-| `nut_ui_networks`                         | Additional custom Docker networks         | `[]`                                                                                               |
+| Variable                                  | Description                                       | Default Value                                                                                    |
+|-------------------------------------------|---------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `nut_ui_dir`                              | Base directory for NUT UI deployment              | `{{ services_dir }}/nut-ui`                                                                      |
+| `nut_ui_owner`                            | File owner                                        | `{{ services_owner }}`                                                                           |
+| `nut_ui_group`                            | File group                                        | `{{ services_group }}`                                                                           |
+| `nut_ui_dir_mode`                         | Directory permissions                             | `{{ services_dir_mode }}`                                                                        |
+| `nut_ui_file_mode`                        | File permissions                                  | `{{ services_file_mode }}`                                                                       |
+| `nut_ui_version`                          | NUT Web UI Docker image version                   | `latest`                                                                                         |
+| `nut_ui_container_name`                   | Docker container name for Web UI                  | `nut-ui`                                                                                         |
+| `nut_ui_watchtower_enabled`               | Enable Watchtower auto-updates                    | `{{ services_watchtower_enabled }}`                                                              |
+| `nut_ui_upsd_address`                     | UPS daemon server address                         | `host.docker.internal`                                                                           |
+| `nut_ui_upsd_port`                        | UPS daemon server port                            | `{{ nut_upsd_listen_port }}`                                                                     |
+| `nut_ui_upsd_user`                        | UPS daemon username                               | `{{ nut_users_admin_name }}`                                                                     |
+| `nut_ui_upsd_password`                    | UPS daemon password                               | `{{ nut_users_admin_password }}`                                                                 |
+| `nut_ui_deploy_resources_limits`          | Container resource limits for Web UI              | `{cpus: "0.50", memory: 500M}`                                                                   |
+| `nut_ui_cgi_version`                      | NUT CGI Docker image version                      | `latest`                                                                                         |
+| `nut_ui_cgi_container_name`               | Docker container name for CGI service             | `nut-cgi`                                                                                     |
+| `nut_ui_cgi_watchtower_enabled`           | Enable Watchtower auto-updates                    | `{{ services_watchtower_enabled }}`                                                              |
+| `nut_ui_cgi_admin_email`                  | Administrator email for CGI interface             | `{{ services_email }}`                                                                           |
+| `nut_ui_cgi_monitor_hosts`                | UPS hosts to monitor                              | `{{ nut_ups_name \| upper }}:{{ nut_ups_name }}@host.docker.internal:{{ nut_upsd_listen_port }}` |
+| `nut_ui_cgi_deploy_resources_limits`      | Container resource limits for CGI service         | `{cpus: "0.50", memory: 500M}`                                                                   |
+| `nut_ui_exporter_version`                 | NUT Exporter Docker image version                 | `latest`                                                                                         |
+| `nut_ui_exporter_container_name`          | Docker container name for exporter                | `nut-exporter`                                                                                   |
+| `nut_ui_exporter_server`                  | NUT server address for exporter                   | `host.docker.internal`                                                                           |
+| `nut_ui_exporter_port`                    | NUT server port for exporter                      | `{{ nut_upsd_listen_port }}`                                                                     |
+| `nut_ui_exporter_username`                | NUT server username for exporter                  | `{{ nut_users_monitor_name }}`                                                                   |
+| `nut_ui_exporter_password`                | NUT server password for exporter                  | `{{ nut_users_monitor_password }}`                                                               |
+| `nut_ui_exporter_variables`               | List of UPS variables to export                   | See [NUT Exporter Variables](#nut-exporter-variables)                                            |
+| `nut_ui_exporter_deploy_resources_limits` | Container resource limits for exporter            | `{cpus: "0.50", memory: 500M}`                                                                   |
+| `nut_ui_networks`                         | Additional custom Docker networks                 | `[]`                                                                                             |
+| `nut_ui_nginx_server_name`                | Nginx server name for reverse proxy configuration | `nut.{{ domain }}`                                                                               |
 
 ## NUT Variables
 

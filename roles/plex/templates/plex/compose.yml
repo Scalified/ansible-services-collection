@@ -12,7 +12,6 @@ services:
       PGID: 1000
       TZ: {{ plex_timezone }}
       VERSION: public
-      PLEX_CLAIM: {{ plex_claim }}
 {% if plex_deploy_resources_limits %}
     deploy:
       resources:
