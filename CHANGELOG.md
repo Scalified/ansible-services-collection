@@ -1,3 +1,7 @@
+# 1.0.1
+
+[#16 Plex claim request on first setup](https://github.com/Scalified/ansible-services-collection/issues/16)
+
 # 1.0.0
 
 [#1 Certbot](https://github.com/Scalified/ansible-services-collection/issues/1)

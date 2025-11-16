@@ -6,5 +6,25 @@
       - "   Plex: service deployment"
       - "================================="
 
+- name: Get Plex container info
+  community.docker.docker_container_info:
+    name: plex
+  register: plex_container_info
+  when: plex_claim is not defined
+
+- name: Set Plex claim fact
+  ansible.builtin.set_fact:
+    plex_claim: >-
+      {{ plex_container_info.container.Config.Env
+        | select('search', '^PLEX_CLAIM=') | first | split('=') | last }}
+  when:
+    - plex_claim is not defined
+    - plex_container_info.exists
+  no_log: true
+
+- name: Include Plex claim tasks
+  ansible.builtin.include_tasks: claim.yml
+  when: plex_claim is not defined
+
 - name: Include Plex tasks
   ansible.builtin.include_tasks: plex.yml

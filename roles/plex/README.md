@@ -77,15 +77,11 @@ plex_ports:
 
 ## Claim
 
-**Plex** requires claiming a server to associate it with user account, which is essential for security, proper functioning, and device discovery.
-If a claim is not provided via the `plex_claim` variable, the role attempts automatic claiming during the initial setup. For automatic claiming the following variables must be provided:
+**Plex** requires that a server be claimed to associate it with a user account, which is essential for security, proper operation, and device discovery
 
- * `plex_client_identifier`
- * `plex_token`
+If `plex_claim` is set, it is used directly. Claim tokens expire quickly and should be used immediately after they are generated. During the initial setup, `plex_claim` must be provided; otherwise, the role will prompt for it during execution
 
-These values are taken from the `X-Plex-Client-Identifier` and `X-Plex-Token` HTTP request headers while the user is signed in at [https://app.plex.tv](https://app.plex.tv) (visible in browser developer tools).
-
-If `plex_claim` is set it is used directly. Claim tokens expire quickly and should be used immediately after being generated
+A Plex claim token can be obtained from the [/claim]https://account.plex.tv/claim page while signed in to a Plex account
 
 ## Server Discovery
 

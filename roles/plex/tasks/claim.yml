@@ -1,0 +1,14 @@
+---
+- name: Prompt to enter the Plex claim
+  ansible.builtin.pause:
+    prompt: |
+      1. Open https://account.plex.tv/claim
+      2. Sign in to your Plex account
+      3. Copy the claim token shown on the page (starts with "claim-")
+      4. Paste the claim token below
+  register: plex_claim_input
+
+- name: Set Plex claim fact
+  ansible.builtin.set_fact:
+    plex_claim: "{{ plex_claim_input.user_input }}"
+  no_log: true

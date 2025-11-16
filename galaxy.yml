@@ -1,7 +1,7 @@
 ---
 namespace: scalified
 name: services
-version: 1.0.0
+version: 1.0.1
 readme: README.md
 authors:
   - Vladyslav Baidak <vld.x@hotmail.com>
