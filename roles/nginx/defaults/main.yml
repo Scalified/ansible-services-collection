@@ -3,8 +3,8 @@ nginx_dir: "{{ services_dir }}/nginx"
 nginx_conf_dir: "{{ nginx_dir }}/nginx/conf.d"
 nginx_owner: "{{ services_owner }}"
 nginx_group: "{{ services_group }}"
-nginx_dir_mode: "{{ services_dir_mode }}"
-nginx_file_mode: "{{ services_file_mode }}"
+nginx_dir_mode: "0775"
+nginx_file_mode: "0664"
 
 nginx_version: alpine
 nginx_container_name: nginx

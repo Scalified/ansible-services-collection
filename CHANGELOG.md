@@ -1,3 +1,7 @@
+# 1.0.3
+
+[#18 Fix Nginx permissions](https://github.com/Scalified/ansible-services-collection/issues/18)
+
 # 1.0.2
 
 [#17 Wait for docker compose](https://github.com/Scalified/ansible-services-collection/issues/17)

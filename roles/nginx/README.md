@@ -101,23 +101,25 @@ server {
 }
 ```
 
-## Betterlisting
+### Betterlisting
 
-The **betterlisting** feature styles Nginx directory and file listings using HTML templates, CSS, and icons
+The **Betterlisting** feature styles Nginx directory and file listings using HTML templates, CSS, and icons
 
 **Betterlisting** can be configured as follows:
 
 ```nginx
-location /betterlisting/ {
-    root /;
-}
+server {
+    ...
 
-location / {
-    root /vault/;
-    try_files $uri $uri/ =404;
+    include /etc/nginx/snippets/betterlisting_location.conf;
 
-    add_before_body /betterlisting/top.html;
-    add_after_body  /betterlisting/bot.html;
+    ...
+
+    location / {
+        ...
+
+        include /etc/nginx/snippets/betterlisting_styles.conf;
+    }
 }
 ```
 

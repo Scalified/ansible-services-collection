@@ -18,7 +18,7 @@
 
     - name: Assert Nginx files mode
       ansible.builtin.assert:
-        that: file.mode | string == services_file_mode
+        that: file.mode | string == nginx_file_mode
         fail_msg: "File '{{ file.path }}' has incorrect mode: {{ file.mode }}"
         success_msg: "File '{{ file.path }}' has correct mode"
       loop: >-
