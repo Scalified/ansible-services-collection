@@ -13,3 +13,4 @@
   community.docker.docker_compose_v2:
     project_src: "{{ plex_dir }}"
     state: present
+    wait: true

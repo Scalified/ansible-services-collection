@@ -1,3 +1,7 @@
+# 1.0.2
+
+[#17 Wait for docker compose](https://github.com/Scalified/ansible-services-collection/issues/17)
+
 # 1.0.1
 
 [#16 Plex claim request on first setup](https://github.com/Scalified/ansible-services-collection/issues/16)
